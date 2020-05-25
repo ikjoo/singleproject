@@ -62,8 +62,8 @@
 					<!-- email3 -->
 					<input type="text" name="email3" id = "email3" title="직접입력인 경우 이메일 뒷자리 보여줌" class="form-control form-control-sm"
         				style="visibility:visible; display: inline; width: 30%;"/><br>
-        			<input type="text" name="emailCh" id = "emailCh"/>
-					<input class="price" type="button" value="인증번호발송" name="email3Chk" id="email3Chk"/>
+        			<input type="text" name="emailCh" id = "emailCh" class="form-control form-control-sm" style="width: 30%; display: inline;"/>
+					<input class="price" type="button" value="인증번호발송" name="email3Chk" id="email3Chk"  class="form-control btn-sm"/>
 					<span id="output" style="color: white;margin-left: 20px;">3:00</span>
                   </div>
                   <div class="mb-4">

@@ -22,6 +22,21 @@
     <link rel="stylesheet" href="<c:url value='/resources/assets/css/style.css'/>" >
     <!-- End layout styles -->
     <link rel="shortcut icon" href="<c:url value='/resources/assets/images/favicon.png'/>" >
+    <script type="text/javascript">
+    $(function() {
+    	$("#email2").change(function(){
+    		if($(this).val()=='etc'){
+    			$("#email3").val("");
+    			$("#email3").css("visibility","visible");
+    			$("#email3").focus();				
+    		}else{
+    			$("#email3").css("visibility","hidden");
+    		}
+    	});
+    	
+    	
+	})
+    </script>
   </head>
   <body>
     <div class="container-scroller">
@@ -35,14 +50,14 @@
                 <h6 class="font-weight-light">단순 회원가입</h6>
                 <form class="pt-3">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="아이디" name="userId">
+                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="아이디" name="userId" style="width: 50%;">
                     <span id="idchk" style="visibility: hidden;">안보이지?</span>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호" name="userPw">
+                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호" name="userPw" style="width: 50%;">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호확인" name="userPw2">
+                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호확인" name="userPw2" style="width: 50%;">
                   </div>
                   <div class="form-group">	
 					<input type="text" name="email1" id = "email1" 
@@ -61,15 +76,16 @@
 					</span>
 					<!-- email3 -->
 					<input type="text" name="email3" id = "email3" title="직접입력인 경우 이메일 뒷자리 보여줌" class="form-control form-control-sm"
-        				style="visibility:visible; display: inline; width: 30%;"/><br>
+        				style="visibility:hidden; display: inline; width: 30%;"/><br>
         			<input type="text" name="emailCh" id = "emailCh" class="form-control form-control-sm" style="width: 30%; display: inline;"/>
 					<input class="price" type="button" value="인증번호발송" name="email3Chk" id="email3Chk"  class="form-control btn-sm"/>
-					<span id="output" style="color: white;margin-left: 20px;">3:00</span>
+					<span id="output" style="color: white;margin-left: 20px;">180 초</span>
                   </div>
                   <div class="mb-4">
                     <div class="form-check">
-                      <label class="form-check-label text-muted">
+                      <label class="form-check-label text-muted" style="display: inline;">
                         <input type="checkbox" class="form-check-input"> 약관 동의 </label>
+                        <input type="button" value="약관 보기">
                     </div>
                   </div>
                   <div class="mt-3">

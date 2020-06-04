@@ -13,6 +13,7 @@
     <!-- plugins:css -->
     <link rel="stylesheet" href="<c:url value='/resources/assets/vendors/mdi/css/materialdesignicons.min.css'/>">
     <link rel="stylesheet" href="<c:url value='/resources/assets/vendors/css/vendor.bundle.base.css'/>">
+    <script type="text/javascript" src ="<c:url value = '/resources/js/jquery-3.4.1.min.js'/>"></script>
     <!-- endinject -->
     <!-- Plugin css for this page -->
     <!-- End plugin css for this page -->
@@ -47,10 +48,10 @@
               <div class="auth-form-light text-left p-5">
               
                 <h4>회원가입</h4>
-                <h6 class="font-weight-light">단순 회원가입</h6>
+
                 <form class="pt-3">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="아이디" name="userId" style="width: 50%;">
+                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="아이디" name="userId" style="width: 50%; display: inline;">
                     <span id="idchk" style="visibility: hidden;">안보이지?</span>
                   </div>
                   <div class="form-group">
@@ -77,16 +78,20 @@
 					<!-- email3 -->
 					<input type="text" name="email3" id = "email3" title="직접입력인 경우 이메일 뒷자리 보여줌" class="form-control form-control-sm"
         				style="visibility:hidden; display: inline; width: 30%;"/><br>
+					 <div class="form-check">
         			<input type="text" name="emailCh" id = "emailCh" class="form-control form-control-sm" style="width: 30%; display: inline;"/>
-					<input class="price" type="button" value="인증번호발송" name="email3Chk" id="email3Chk"  class="form-control btn-sm"/>
+					<input type="button" value="인증번호발송" name="email3Chk" id="email3Chk"  class="btn btn-gradient-dark btn-rounded btn-sm"/>
 					<span id="output" style="color: white;margin-left: 20px;">180 초</span>
+					 </div>
                   </div>
                   <div class="mb-4">
-                    <div class="form-check">
+                    <div class="form-check"  style="display: inline;">
                       <label class="form-check-label text-muted" style="display: inline;">
                         <input type="checkbox" class="form-check-input"> 약관 동의 </label>
-                        <input type="button" value="약관 보기">
                     </div>
+
+	                        <input type="button" value="약관 보기" class="btn btn-gradient-dark btn-rounded btn-sm">
+
                   </div>
                   <div class="mt-3">
                     <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="">회원가입</a>

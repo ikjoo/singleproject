@@ -96,7 +96,7 @@
                   <div class="mt-3">
                     <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="">회원가입</a>
                   </div>
-                  <div class="text-center mt-4 font-weight-light"> 이미 아이디가 있나요? <a href="login.html" class="text-primary">로그인</a>
+                  <div class="text-center mt-4 font-weight-light"> 이미 아이디가 있나요? <a href="<c:url value='/login'/>" class="text-primary">로그인</a>
                   </div>
                 </form>
               </div>
@@ -109,7 +109,7 @@
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
-    <script src="<c:url value='/resources/assets/vendors/js/vendor.bundle.base.js'/>" ></script>
+    <script src="<c:url value='/resources/assets/vendors/js/vendor.bundle.base.js'/>"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
     <!-- End plugin js for this page -->

@@ -35,7 +35,36 @@
     		}
     	});
     	
-    	
+    	$("#email3Chk").click(function() {
+    		$(this).val("메일 전송 중...");
+    		$(this).attr("disabled",true);
+    		
+    		$.ajax({
+    			url:"<c:url value=''/>",
+    			type:"post",
+    			data:
+    				{
+    					email1 : $("#email1").val(),
+    					email2: $("#email2").val(),
+    					email3:$("#email3").val()
+    				
+    				}
+    			,
+    			success:function(res){
+    				 if(res==1){
+    					
+    				}else if(res==2){
+    					
+    				}else{
+    					
+    				} 
+    				
+    			},
+    			error:function(xhr,status,error){
+    				alert("Error : "+status+", "+error);
+    			}
+    		});
+		});
 	})
     </script>
   </head>

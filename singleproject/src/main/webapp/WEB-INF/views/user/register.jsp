@@ -24,7 +24,11 @@
     <!-- End layout styles -->
     <link rel="shortcut icon" href="<c:url value='/resources/assets/images/favicon.png'/>" >
     <script type="text/javascript">
+    	var timer;
+    	var count=0;
     $(function() {
+    	$("#reemail3Chk").css("visibility","hidden");
+    	$("#output").hide();
     	$("#email2").change(function(){
     		if($(this).val()=='etc'){
     			$("#email3").val("");
@@ -36,36 +40,148 @@
     	});
     	
     	$("#email3Chk").click(function() {
-    		$(this).val("메일 전송 중...");
-    		$(this).attr("disabled",true);
-    		
-    		$.ajax({
-    			url:"<c:url value='/register/useremail'/>",
-    			type:"post",
-    			data:
-    				{
-    					email1 : $("#email1").val(),
-    					email2: $("#email2").val(),
-    					email3:$("#email3").val()
-    				
+    		var textname=$(this).val();
+    		if(textname=="인증하기"){
+    			$.ajax({
+    				url:"<c:url value='/register/emailcer'/>",
+    				type:"post",
+    				data:
+    					{
+    						email1 : $("#email1").val(),
+    						email2: $("#email2").val(),
+    						email3:$("#email3").val(),
+    						cer:$("#emailCh").val()
+    					
+    					}
+    				,
+    				success:function(res){
+    					 if(res==1){
+    						alert("인증완료");
+    						$("#email1").attr("disabled",true);
+    						$("#email2").attr("disabled",true);
+    						$("#email3").attr("disabled",true);
+    						$("#emailCh").attr("disabled",true);
+    						$("#email3Chk").val("인증완료");
+    						$("#email3Chk").attr("disabled",true);
+    						$("#reemail3Chk").css("visibility","hidden");
+    						stop();
+    						$("#output").hide();
+    					}else if(res==2){
+    						alert("인증실패");    						
+    					}else{
+    						
+    					} 
+    					
+    				},
+    				error:function(xhr,status,error){
+    					alert("Error : "+status+", "+error);
     				}
-    			,
-    			success:function(res){
-    				 if(res==1){
-    					
-    				}else if(res==2){
-    					
-    				}else{
-    					
-    				} 
-    				
-    			},
-    			error:function(xhr,status,error){
-    				alert("Error : "+status+", "+error);
-    			}
-    		});
+    			});
+    			
+    			
+    		}else if(textname=="인증번호발송"){
+    			stop();
+	    		ceremailSender();			
+    		}else{
+    			alert("오류");
+    		}
 		});
-	})
+    	
+    	$("#reemail3Chk").click(function() {
+    		$("#reemail3Chk").css("visibility","hidden");
+    		stop();
+    		ceremailSender();
+    	});
+	});
+    
+    function start() {
+    	stop();
+    	$("#output").text("180 초");
+		$("#output").show();
+		count=180;
+		timer=setInterval(function(){
+			if(count>=180){
+				count--;
+			}else if(count==0){
+				alert("인증 시간이 만료 되었습니다.");
+				stop();
+				$("#reemail3Chk").css("visibility","hidden");
+				$("#output").css("visibility","hidden");
+				$("#email3Chk").val("인증번호발송");
+			}else{
+				console.log(count+" 초");
+				$("#output").text(count+" 초");
+				count--;
+			}
+			
+		}, 1000);
+		
+	};
+    
+    function stop() {
+    	clearInterval(timer);
+	};
+    
+    function ceremailSender() {
+    
+    	$("#email3Chk").val("메일 전송 중...");
+		$("#email3Chk").attr("disabled",true);
+		$("#output").text("180 초");
+		$("#output").hide();
+		
+		$.ajax({
+			url:"<c:url value='/register/useremail'/>",
+			type:"post",
+			data:
+				{
+					email1 : $("#email1").val(),
+					email2: $("#email2").val(),
+					email3:$("#email3").val()
+				
+				}
+			,
+			success:function(res){
+				 if(res==1){
+					alert("인증번호가 발송되었습니다.");
+					$("#email3Chk").val("인증하기");
+					$("#email3Chk").attr("disabled",false);
+					$("#reemail3Chk").css("visibility","visible");
+					start();
+					/*$("#output").text("180 초");
+					$("#output").show();
+					count=180;
+					timer=setInterval(function(){
+						if(count>=180){
+							count--;
+						}else if(count==0){
+							alert("인증 시간이 만료 되었습니다.");
+							clearInterval(timer);
+							$("#reemail3Chk").css("visibility","hidden");
+							$("#output").css("visibility","hidden");
+							$("#email3Chk").val("인증번호발송");
+						}else{
+							console.log(count+" 초");
+							$("#output").text(count+" 초");
+							count--;
+						}
+						
+					}, 1000);*/
+					
+				}else if(res==2){
+					
+				}else{
+					
+				} 
+				
+			},
+			error:function(xhr,status,error){
+				alert("Error : "+status+", "+error);
+			}
+		});
+    	
+	};
+	
+	
     </script>
   </head>
   <body>
@@ -110,7 +226,8 @@
 					 <div class="form-check">
         			<input type="text" name="emailCh" id = "emailCh" class="form-control form-control-sm" style="width: 30%; display: inline;"/>
 					<input type="button" value="인증번호발송" name="email3Chk" id="email3Chk"  class="btn btn-gradient-dark btn-rounded btn-sm"/>
-					<span id="output" style="color: white;margin-left: 20px;">180 초</span>
+					<input type="button" value="재전송" name="reemail3Chk" id="reemail3Chk"  class="btn btn-gradient-dark btn-rounded btn-sm" style="visibility: hidden;"/>
+					<span id="output" style="margin-left: 20px;" ></span>
 					 </div>
                   </div>
                   <div class="mb-4">

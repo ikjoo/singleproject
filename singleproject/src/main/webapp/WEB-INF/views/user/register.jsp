@@ -40,7 +40,7 @@
     		$(this).attr("disabled",true);
     		
     		$.ajax({
-    			url:"<c:url value=''/>",
+    			url:"<c:url value='/register/useremail'/>",
     			type:"post",
     			data:
     				{

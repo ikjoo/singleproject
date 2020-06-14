@@ -92,7 +92,93 @@
     		stop();
     		ceremailSender();
     	});
+    	
+    	
+    	$("input[name=userid]").keyup(function() {
+			if($(this).val().length>=4){
+				$.ajax({
+    				url:"<c:url value='/register/idChk'/>",
+    				type:"post",
+    				data:
+    					{
+    						useridChk : $("input[name=userid]").val()
+
+    					}
+    				,
+    				success:function(res){
+    					 if(res==1){
+    						 $("#idchk").css("visibility","visible");
+    						 $("#idchk").css("color","red");
+    						 $("#idchk").text("이미 사용중입니다.");
+    					}else if(res==0){
+    						$("#idchk").css("visibility","visible");
+   						 	$("#idchk").css("color","blue");
+   						 	$("#idchk").text("사용가능합니다.");
+    					}else{
+    						
+    					} 
+    					
+    				},
+    				error:function(xhr,status,error){
+    					alert("Error : "+status+", "+error);
+    				}
+    			});
+				
+			}else if($(this).val().length<=0){
+				$("#idchk").text("");
+				$("#idchk").css("visibility","hidden");
+			}else{
+				$("#idchk").css("visibility","visible");
+				 $("#idchk").css("color","red");
+				 $("#idchk").text("길이가 너무 짧습니다.");
+			}
+		});
+    	
+    	$("input[name=userpw]").keyup(function() {
+			if($(this).val().length>=6){
+				if(pwInvaildChk($(this).val())){
+					$("#invaildpw").css("color","blue");
+					$("#invaildpw").text("사용가능한 비밀번호입니다.");
+					$("#invaildpw").css("visibility","visible");
+				}else{
+					$("#invaildpw").css("color","red");
+					$("#invaildpw").text("소문자,대문자,숫자,(!,@,$,^)만 사용하세요.");
+					$("#invaildpw").css("visibility","visible");
+				}
+			}else if($(this).val().length<=0){
+				$("#invaildpw").text("");
+				$("#invaildpw").css("visibility","hidden");
+			}else{
+				$("#invaildpw").css("color","red");
+				$("#invaildpw").text("길이가 짧습니다.(6자리 이상)");
+				$("#invaildpw").css("visibility","visible");
+			}
+		});
+    	
+    	$("input[name=userpw2]").keyup(function() {
+    		var pwd=$("input[name=userpw]").val();
+    		var pwd2=$(this).val();
+    		
+    		if(pwd2.length>0){
+    			if(pwd==pwd2){
+        			$("#invaildpw2").css("color","blue");
+    				$("#invaildpw2").text("비밀번호가 같습니다.");
+    				$("#invaildpw2").css("visibility","visible");
+        		}else{
+        			$("#invaildpw2").css("color","red");
+    				$("#invaildpw2").text("비밀번호가 다릅니다.");
+    				$("#invaildpw2").css("visibility","visible");
+        		}
+    		}else if(pwd2.length==0){
+    			$("#invaildpw2").text("");
+				$("#invaildpw2").css("visibility","hidden");
+    		}
+    		
+    	});
+    	
 	});
+    
+/*--------------------------------밑으로 함수들------------------------------------*/    
     
     function start() {
     	stop();
@@ -181,6 +267,10 @@
     	
 	};
 	
+	function pwInvaildChk(pwd) {
+		var pattern= new RegExp(/^[a-zA-Z0-9]+[!@$^]$/g);
+		return pattern.test(pwd);
+	};
 	
     </script>
   </head>
@@ -196,14 +286,16 @@
 
                 <form class="pt-3">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="아이디" name="userId" style="width: 50%; display: inline;">
+                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="아이디" name="userid" style="width: 50%; display: inline;">
                     <span id="idchk" style="visibility: hidden;">안보이지?</span>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호" name="userPw" style="width: 50%;">
+                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호" name="userpw" style="width: 50%; display: inline;">
+                    <span id="invaildpw" style="visibility: hidden;">안보이지?</span>
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호확인" name="userPw2" style="width: 50%;">
+                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호확인" name="userpw2" style="width: 50%; display: inline;">
+                    <span id="invaildpw2" style="visibility: hidden;">안보이지?</span>
                   </div>
                   <div class="form-group">	
 					<input type="text" name="email1" id = "email1" 

@@ -1,8 +1,5 @@
 package com.portfolio.singleproject.email;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.mail.MessagingException;
 
 import org.slf4j.Logger;

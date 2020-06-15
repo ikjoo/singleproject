@@ -176,6 +176,50 @@
     		
     	});
     	
+    	$("#sub").click(function() {
+    		$("form[name=registerForm]").submit();
+		});
+    	
+    	$("form[name=registerForm]").submit(function() {
+    		var text1=$("#idchk").text();
+    		var text2=$("#invaildpw").text();
+    		var text3=$("#invaildpw2").text();
+    		
+			if(!$("#chkbox").is(":checked")){
+				alert("약관에 동의하시기 바랍니다.");
+				$("#chkbox").focus();
+				event.preventDefault();
+			}else if($("input[name=userid]").val()<=0){
+				alert("아이디를 입력하시기 바랍니다.");
+				$("input[name=userid]").focus();
+				event.preventDefault();
+			}else if($("input[name=userpw]").val()<=0){
+				alert("비밀번호를 입력하시기 바랍니다.");
+				$("input[name=userpw]").focus();
+				event.preventDefault();
+			}else if($("input[name=userpw2]").val()<=0){
+				alert("비밀번호 확인을 입력하시기 바랍니다.");
+				$("input[name=userpw2]").focus();
+				event.preventDefault();
+			}else if($("#email3Chk").val()!="인증완료"){
+				alert("이메일을 인증 하시기 바랍니다.");
+				$("#email3Chk").focus();
+				event.preventDefault();
+			}else if(text1!="사용가능합니다."){
+				alert("아이디를 확인하시기 바랍니다.");
+				$("input[name=userid]").focus();
+				event.preventDefault();
+			}else if(text2!="사용가능한 비밀번호입니다."){
+				alert("비밀번호를 확인하시기 바랍니다.");
+				$("input[name=userpw]").focus();
+				event.preventDefault();
+			}else if(text3!="비밀번호가 같습니다."){
+				alert("비밀번확인을 확인하시기 바랍니다.");
+				$("input[name=userpw2]").focus();
+				event.preventDefault();
+			}
+		});
+    	
 	});
     
 /*--------------------------------밑으로 함수들------------------------------------*/    
@@ -284,7 +328,7 @@
               
                 <h4>회원가입</h4>
 
-                <form class="pt-3">
+                <form class="pt-3" name="registerForm">
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="아이디" name="userid" style="width: 50%; display: inline;">
                     <span id="idchk" style="visibility: hidden;">안보이지?</span>
@@ -325,14 +369,14 @@
                   <div class="mb-4">
                     <div class="form-check"  style="display: inline;">
                       <label class="form-check-label text-muted" style="display: inline;">
-                        <input type="checkbox" class="form-check-input"> 약관 동의 </label>
+                        <input type="checkbox" class="form-check-input" id="chkbox"> 약관 동의 </label>
                     </div>
 
 	                        <input type="button" value="약관 보기" class="btn btn-gradient-dark btn-rounded btn-sm">
 
                   </div>
                   <div class="mt-3">
-                    <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="">회원가입</a>
+                    <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" id="sub" href="">회원가입</a>
                   </div>
                   <div class="text-center mt-4 font-weight-light"> 이미 아이디가 있나요? <a href="<c:url value='/login'/>" class="text-primary">로그인</a>
                   </div>

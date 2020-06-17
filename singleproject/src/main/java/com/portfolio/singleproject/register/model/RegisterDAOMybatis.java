@@ -16,6 +16,11 @@ public class RegisterDAOMybatis implements RegisterDAO{
 	public int userIdChk(String userid) {
 		return sqlSession.selectOne(namespace+"useridChk", userid);
 	}
+
+	@Override
+	public int userRegister(RegisterVO registerVo) {
+		return sqlSession.insert(namespace+"userregister", registerVo);
+	}
 	
 	
 

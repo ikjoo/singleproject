@@ -4,12 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.portfolio.singleproject.register.model.RegisterServicesImpl;
+import com.portfolio.singleproject.register.model.RegisterVO;
 
 @Controller
 public class RegisterController {
@@ -41,10 +44,41 @@ public class RegisterController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public Object registerWrite() {
+	public Object registerWrite(@ModelAttribute RegisterVO registerVo,@RequestParam String email3
+			,Model model) {
 		
+		logger.info("회원가입 파라미터 registerVo={},email3={}",registerVo,email3);
 		
+		String email1 = registerVo.getEmail1();
+		String email2 = registerVo.getEmail2();
 		
+		if(email1==null || email1.isEmpty()) {
+			registerVo.setEmail2("");
+		}else {
+			if(email2.equals("etc")) {
+				if(email3!=null && !email3.isEmpty()) {
+					registerVo.setEmail2(email3);
+				}else {
+					registerVo.setEmail1("");
+					registerVo.setEmail2("");
+				}
+			}
+		}
+		
+		int res=registerService.userRegister(registerVo);
+		
+		String url="", msg="";
+		
+		if(res>0) {
+			msg="회원가입이 완료되었습니다.";
+			url="/login";
+		}else {
+			msg="회원가입 실패";
+			url="/register";
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url",url);
 		
 		return "common/message";
 	}

@@ -6,6 +6,11 @@
 	<select id="useridChk" parameterType="string" resultType="int">
 		select count(*) from tbl_user where userid=#{userid}
 	</select>
+	
+	<insert id="userregister" parameterType="registerVo">
+		insert into tbl_user
+		values(user_seq.nextval,#{userid},#{userpw},#{email1},#{email2},#{salt},#{path})
+	</insert>
 </mapper>
 
 

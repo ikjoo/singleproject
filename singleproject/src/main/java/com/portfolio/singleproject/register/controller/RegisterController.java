@@ -40,4 +40,13 @@ public class RegisterController {
 		return res;
 	}
 	
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
+	public Object registerWrite() {
+		
+		
+		
+		
+		return "common/message";
+	}
+	
 }

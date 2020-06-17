@@ -328,7 +328,7 @@
               
                 <h4>회원가입</h4>
 
-                <form class="pt-3" name="registerForm">
+                <form class="pt-3" action="<c:url value='/register'/>" method="post" name="registerForm">
                   <div class="form-group">
                     <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="아이디" name="userid" style="width: 50%; display: inline;">
                     <span id="idchk" style="visibility: hidden;">안보이지?</span>

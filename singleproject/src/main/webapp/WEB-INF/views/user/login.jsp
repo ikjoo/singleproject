@@ -36,10 +36,10 @@
                 <h6 class="font-weight-light">계속 진행하기위해 로그인해주세요.</h6>
                 <form class="pt-3">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="아이디">
+                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="아이디" name="userid">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호">
+                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호" name="userpw">
                   </div>
                   <div class="mt-3">
                     <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="#">로그인</a>
@@ -47,7 +47,7 @@
                   <div class="my-2 d-flex justify-content-between align-items-center">
                     <div class="form-check">
                       <label class="form-check-label text-muted">
-                        <input type="checkbox" class="form-check-input"> 아이디 저장 </label>
+                        <input type="checkbox" class="form-check-input" name="chkSave"> 아이디 저장 </label>
                     </div>
                     <a href="#" class="auth-link text-black">비밀번호를 잊어버리셨어요?</a>
                   </div>

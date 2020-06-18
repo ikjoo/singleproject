@@ -176,9 +176,48 @@
     		
     	});
     	
-    	$("#sub").click(function() {
-    		$("form[name=registerForm]").submit();
-		});
+    	/*$("#sub").click(function() {
+    		event.preventDefault();
+    		$("form[name=registerForm]").submit(function() {
+        		var text1=$("#idchk").text();
+        		var text2=$("#invaildpw").text();
+        		var text3=$("#invaildpw2").text();
+        		
+    			if(!$("#chkbox").is(":checked")){
+    				alert("약관에 동의하시기 바랍니다.");
+    				$("#chkbox").focus();
+    				event.preventDefault();
+    			}else if($("input[name=userid]").val()<=0){
+    				alert("아이디를 입력하시기 바랍니다.");
+    				$("input[name=userid]").focus();
+    				event.preventDefault();
+    			}else if($("input[name=userpw]").val()<=0){
+    				alert("비밀번호를 입력하시기 바랍니다.");
+    				$("input[name=userpw]").focus();
+    				event.preventDefault();
+    			}else if($("input[name=userpw2]").val()<=0){
+    				alert("비밀번호 확인을 입력하시기 바랍니다.");
+    				$("input[name=userpw2]").focus();
+    				event.preventDefault();
+    			}else if($("#email3Chk").val()!="인증완료"){
+    				alert("이메일을 인증 하시기 바랍니다.");
+    				$("#email3Chk").focus();
+    				event.preventDefault();
+    			}else if(text1!="사용가능합니다."){
+    				alert("아이디를 확인하시기 바랍니다.");
+    				$("input[name=userid]").focus();
+    				event.preventDefault();
+    			}else if(text2!="사용가능한 비밀번호입니다."){
+    				alert("비밀번호를 확인하시기 바랍니다.");
+    				$("input[name=userpw]").focus();
+    				event.preventDefault();
+    			}else if(text3!="비밀번호가 같습니다."){
+    				alert("비밀번확인을 확인하시기 바랍니다.");
+    				$("input[name=userpw2]").focus();
+    				event.preventDefault();
+    			}
+    		});
+		});*/
     	
     	$("form[name=registerForm]").submit(function() {
     		var text1=$("#idchk").text();
@@ -376,7 +415,7 @@
 
                   </div>
                   <div class="mt-3">
-                    <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" id="sub" href="">회원가입</a>
+                    <button type="submit" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" id="sub">회원가입</button>
                   </div>
                   <div class="text-center mt-4 font-weight-light"> 이미 아이디가 있나요? <a href="<c:url value='/login'/>" class="text-primary">로그인</a>
                   </div>

@@ -44,7 +44,7 @@ public class RegisterController {
 	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public Object registerWrite(@ModelAttribute RegisterVO registerVo,@RequestParam String email3
+	public Object registerWrite(@ModelAttribute RegisterVO registerVo,@RequestParam(required = false) String email3
 			,Model model) {
 		
 		logger.info("회원가입 파라미터 registerVo={},email3={}",registerVo,email3);

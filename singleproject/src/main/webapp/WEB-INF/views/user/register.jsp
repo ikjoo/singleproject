@@ -57,9 +57,9 @@
     				success:function(res){
     					 if(res==1){
     						alert("인증완료");
-    						$("#email1").attr("disabled",true);
-    						$("#email2").attr("disabled",true);
-    						$("#email3").attr("disabled",true);
+    						//$("#email1").attr("disabled",true);
+    						//$("#email2").attr("disabled",true);
+    						//$("#email3").attr("disabled",true);
     						$("#emailCh").attr("disabled",true);
     						$("#email3Chk").val("인증완료");
     						$("#email3Chk").attr("disabled",true);
@@ -223,7 +223,8 @@
     		var text1=$("#idchk").text();
     		var text2=$("#invaildpw").text();
     		var text3=$("#invaildpw2").text();
-    		
+    		//alert("email1="+$("#email1").val());
+    		//alert("email2="+$("#email2").val());
 			if(!$("#chkbox").is(":checked")){
 				alert("약관에 동의하시기 바랍니다.");
 				$("#chkbox").focus();

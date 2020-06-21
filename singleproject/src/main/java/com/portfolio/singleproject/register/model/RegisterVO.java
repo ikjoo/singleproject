@@ -6,7 +6,6 @@ public class RegisterVO {
 	private String userpw;
 	private String email1;
 	private String email2;
-	private String email3;
 	private String salt;
 	private String path;
 	public int getNo() {
@@ -39,12 +38,6 @@ public class RegisterVO {
 	public void setEmail2(String email2) {
 		this.email2 = email2;
 	}
-	public String getEmail3() {
-		return email3;
-	}
-	public void setEmail3(String email3) {
-		this.email3 = email3;
-	}
 	public String getSalt() {
 		return salt;
 	}
@@ -60,8 +53,9 @@ public class RegisterVO {
 	@Override
 	public String toString() {
 		return "RegisterVO [no=" + no + ", userid=" + userid + ", userpw=" + userpw + ", email1=" + email1 + ", email2="
-				+ email2 + ", email3=" + email3 + ", salt=" + salt + ", path=" + path + "]";
+				+ email2 + ", salt=" + salt + ", path=" + path + "]";
 	}
+
 	
 	
 }

@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
@@ -36,56 +38,63 @@ public class IndexController {
 	public Object index(@RequestParam(required = false) String filedir,
 			@RequestParam(required = false) String dirname,
 			@RequestParam(defaultValue = "1") String updirtype,
-			HttpServletResponse response,Model model) {
+			HttpServletResponse response,
+			HttpServletRequest request,Model model) {
 		logger.info("메인화면보여주기");
+		HttpSession session=request.getSession();
+		String userSession=(String) session.getAttribute("userid");
 		String basicDir="";
 		
-		if((filedir==null || filedir.isEmpty())) {
-			basicDir=BASIC;
-			logger.info("basicDir={}",basicDir);
-		}else if((filedir!=null&&!filedir.isEmpty())) {
-			basicDir=filedir;
-			logger.info("basicDir={}",basicDir);
-		}
-		
-		if(updirtype.equals("2")) {
-			logger.info("updirtype={}",updirtype);
-			logger.info("1. dirname={}",dirname);
-			logger.info("바뀌기 전 basicDir={}",basicDir);
-			basicDir=basicDir.substring(0, basicDir.lastIndexOf("/"+dirname));
-			logger.info("바뀐 후 basicDir={}",basicDir);
-			dirname=basicDir.substring(basicDir.lastIndexOf("/")+1);
-			logger.info("2. dirname={}",dirname);
-			if(filedir.length()<=BASIC.length()) {
+		if(userSession==null||userSession.isEmpty()) {
+			return "user/login";
+		}else {
+			if((filedir==null || filedir.isEmpty())) {
 				basicDir=BASIC;
-				dirname="";
+				logger.info("basicDir={}",basicDir);
+			}else if((filedir!=null&&!filedir.isEmpty())) {
+				basicDir=filedir;
+				logger.info("basicDir={}",basicDir);
 			}
-		}
-		
-		File file=new File(basicDir);
-		File[] fileList=file.listFiles();
-		List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
-		
-			for(File tmp:fileList) {
-				Map<String, Object> map=new HashMap<String, Object>();
-				logger.info("파일명={}",tmp.getName());
-				if(tmp.isDirectory()) {
-	
-					map.put("fileName", tmp.getName()+"?");
-					map.put("size", FileUtils.sizeOfDirectory(new File(tmp.getAbsolutePath()))/1024);
-					list.add(map);
-				}else {
-					map.put("fileName",tmp.getName());
-					map.put("size", tmp.length()/1024);
-					list.add(map);
-				}
-				
-			}//for
 			
-			model.addAttribute("list", list);
-			model.addAttribute("dir",basicDir);
-			model.addAttribute("dirname",dirname);
-			return "index";
+			if(updirtype.equals("2")) {
+				logger.info("updirtype={}",updirtype);
+				logger.info("1. dirname={}",dirname);
+				logger.info("바뀌기 전 basicDir={}",basicDir);
+				basicDir=basicDir.substring(0, basicDir.lastIndexOf("/"+dirname));
+				logger.info("바뀐 후 basicDir={}",basicDir);
+				dirname=basicDir.substring(basicDir.lastIndexOf("/")+1);
+				logger.info("2. dirname={}",dirname);
+				if(filedir.length()<=BASIC.length()) {
+					basicDir=BASIC;
+					dirname="";
+				}
+			}
+			
+			File file=new File(basicDir);
+			File[] fileList=file.listFiles();
+			List<Map<String, Object>> list=new ArrayList<Map<String,Object>>();
+			
+				for(File tmp:fileList) {
+					Map<String, Object> map=new HashMap<String, Object>();
+					logger.info("파일명={}",tmp.getName());
+					if(tmp.isDirectory()) {
+		
+						map.put("fileName", tmp.getName()+"?");
+						map.put("size", FileUtils.sizeOfDirectory(new File(tmp.getAbsolutePath()))/1024);
+						list.add(map);
+					}else {
+						map.put("fileName",tmp.getName());
+						map.put("size", tmp.length()/1024);
+						list.add(map);
+					}
+					
+				}//for
+				
+				model.addAttribute("list", list);
+				model.addAttribute("dir",basicDir);
+				model.addAttribute("dirname",dirname);
+				return "index";
+		}
 
 			
 		

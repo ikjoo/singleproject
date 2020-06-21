@@ -14,8 +14,9 @@ public class LoginServiceImpl implements LoginServices{
 
 	@Override
 	public int userLogin(String userid, String userpw) {
+		System.out.println(userid);
 		String salt=loginDao.saltByuserid(userid);
-		
+		System.out.println(salt);
 		int result=0;
 		
 		if(salt==null||salt.isEmpty()) {

@@ -37,6 +37,17 @@
 	     <beans:property name="order" value="0" />
 	</beans:bean>
 	
+	<interceptors>
+		<interceptor>
+			<mapping path="/*"/>
+			<exclude-mapping path="/login"/>
+			<exclude-mapping path="/register"/>
+			<exclude-mapping path="/register/idChk"/>
+			<exclude-mapping path="/register/useremail"/>
+			<exclude-mapping path="/register/emailcer"/>
+			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
 	
+	</interceptors>
 	
 </beans:beans>

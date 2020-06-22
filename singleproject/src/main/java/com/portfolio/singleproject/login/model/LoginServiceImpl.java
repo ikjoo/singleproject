@@ -16,6 +16,7 @@ public class LoginServiceImpl implements LoginServices{
 	public int userLogin(String userid, String userpw) {
 		System.out.println(userid);
 		String salt=loginDao.saltByuserid(userid);
+		String pwByuserid=loginDao.pwByuserid(userid);
 		System.out.println(salt);
 		int result=0;
 		
@@ -23,7 +24,8 @@ public class LoginServiceImpl implements LoginServices{
 			result=NONE_USERID;
 		}else {
 			String pw=SHA256Util.getEncrypt(userpw, salt);
-			if(pw.equals(salt)) {
+			System.out.println("pw="+pw);
+			if(pw.equals(pwByuserid)) {
 				result=LOGIN_OK;
 			}else {
 				result=DISAGREE_PWD;

@@ -40,7 +40,7 @@ public class LoginController {
 		logger.info("로그인 하기 파라미터 userid={},userpw={}",userid,userpw);
 		
 		int res=loginService.userLogin(userid, userpw);
-		
+		logger.info("결과 res={}",res);
 		String url="",msg="";
 		
 		if(res==LoginServices.NONE_USERID) {

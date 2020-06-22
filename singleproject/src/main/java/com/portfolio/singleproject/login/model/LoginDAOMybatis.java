@@ -23,6 +23,11 @@ public class LoginDAOMybatis implements LoginDAO{
 	public RegisterVO userInfoByuserid(String userid) {
 		return sqlSession.selectOne(namespace+"userInfoByuserid", userid);
 	}
+
+	@Override
+	public String pwByuserid(String userid) {
+		return sqlSession.selectOne(namespace+"pwByuserid", userid);
+	}
 	
 	
 

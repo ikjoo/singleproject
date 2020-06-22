@@ -41,13 +41,8 @@ public class IndexController {
 			HttpServletResponse response,
 			HttpServletRequest request,Model model) {
 		logger.info("메인화면보여주기");
-		HttpSession session=request.getSession();
-		String userSession=(String) session.getAttribute("userid");
 		String basicDir="";
 		
-		if(userSession==null||userSession.isEmpty()) {
-			return "user/login";
-		}else {
 			if((filedir==null || filedir.isEmpty())) {
 				basicDir=BASIC;
 				logger.info("basicDir={}",basicDir);
@@ -94,7 +89,7 @@ public class IndexController {
 				model.addAttribute("dir",basicDir);
 				model.addAttribute("dirname",dirname);
 				return "index";
-		}
+		
 
 			
 		

@@ -98,29 +98,39 @@
 			}
 		});
 		
+		$("#logout").click(function() {
+			if(confirm("로그아웃 하시겠습니까?")){
+				location.href="<c:url value='/logout'/>";
+			}
+		});
+		
 	});
 </script>
 </head>
 <body>
 <form action="<c:url value='/home2'/>" method="post" name="frm">
-	<input type="text" value="${dir }" name="filedir">
-	<input type="text" value="${dir }" name="downdir">
-	<input type="text" value="${dirname }" name="dirname">
-	<input type="text" value="${dir }" name="original1">
-	<input type="text" value="${dirname }" name="original2">
-	<input type="text" value="1" name="updirtype">
-	<input type="file" >
+	<input type="hidden" value="${dir }" name="filedir">
+	<input type="hidden" value="${dir }" name="downdir">
+	<input type="hidden" value="${dirname }" name="dirname">
+	<input type="hidden" value="${dir }" name="original1">
+	<input type="hidden" value="${dirname }" name="original2">
+	<input type="hidden" value="1" name="updirtype">
 	<div class="content-wrapper">
 		<div class="card">
 			<div class="card-body">
 				<div style="margin-bottom: 10px;" class="form-group row">
-					<input type="button" value="상위폴더로"
-						class="btn btn-gradient-light btn-rounded btn-sm col-sm-1" name="updirbtn" id="updirbtn">
-						
-					<select name="filecompression" class="form-control form-control-sm col-sm-2" id="filecompression">
-						<option value="">압축 다운</option>
-						<option value="zip">.zip</option>
-					</select>
+					<div style="width: 90%;" class="form-group row">
+						<input type="button" value="상위폴더로"
+							class="btn btn-gradient-light btn-rounded btn-sm col-sm-2" name="updirbtn" id="updirbtn" style="position: relative;">
+							
+						<select name="filecompression" class="form-control form-control-sm col-sm-2" id="filecompression">
+							<option value="">압축 다운</option>
+							<option value="zip">.zip</option>
+						</select>
+					</div>
+					<div style="width: 10%; float: right;" class="form-group row">
+						<input type="button" class="btn btn-gradient-light btn-rounded btn-sm" id="logout" value="로그아웃">
+					</div>
 				</div>
 
 				<div>

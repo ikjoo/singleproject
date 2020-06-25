@@ -36,7 +36,7 @@
                 <h6 class="font-weight-light">계속 진행하기위해 로그인해주세요.</h6>
                 <form class="pt-3" action="<c:url value='/login'/>" method="post">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="아이디" name="userid">
+                    <input type="text" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="아이디" name="userid" value="${cookie.chk_userid.value }">
                   </div>
                   <div class="form-group">
                     <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="비밀번호" name="userpw">
@@ -47,7 +47,11 @@
                   <div class="my-2 d-flex justify-content-between align-items-center">
                     <div class="form-check">
                       <label class="form-check-label text-muted">
-                        <input type="checkbox" class="form-check-input" name="chkSave"> 아이디 저장 </label>
+                        <input type="checkbox" class="form-check-input"
+                        <c:if test="${!empty cookie.chk_userid }">
+							checked="checked"
+						</c:if>
+                         name="chkSave"> 아이디 저장 </label>
                     </div>
                     <a href="#" class="auth-link text-black">비밀번호를 잊어버리셨어요?</a>
                   </div>

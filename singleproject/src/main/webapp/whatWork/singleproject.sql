@@ -32,8 +32,8 @@ CREATE TABLE tbl_user (
 	email1    VARCHAR2(900)      NULL,     -- 이메일1
 	email2    VARCHAR2(900)      NULL,     -- 이메일2
 	salt      VARCHAR2(100 char) NOT NULL, -- 암호화
-	path      VARCHAR2(1500)   NULL     -- 공유 폴더
-
+	path      VARCHAR2(1500)   NULL,     -- 공유 폴더
+    auth      VARCHAR2(3)   DEFAULT'N'
 );
 
 -- 유저

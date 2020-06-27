@@ -104,6 +104,10 @@
 			}
 		});
 		
+		$("#authselect").click(function() {
+			location.href="<c:url value='/authselect'/>";
+		});
+		
 	});
 </script>
 </head>
@@ -118,8 +122,8 @@
 	<div class="content-wrapper">
 		<div class="card">
 			<div class="card-body">
-				<div style="margin-bottom: 10px;" class="form-group row">
-					<div style="width: 90%;" class="form-group row">
+				<div style="margin-bottom: 10px; margin-left: 0px; margin-right: 0px;" class="row">
+					<div style="width: 83%; position: relative;" class="row">
 						<input type="button" value="상위폴더로"
 							class="btn btn-gradient-light btn-rounded btn-sm col-sm-2" name="updirbtn" id="updirbtn" style="position: relative;">
 							
@@ -128,8 +132,9 @@
 							<option value="zip">.zip</option>
 						</select>
 					</div>
-					<div style="width: 10%; float: right;" class="form-group row">
-						<input type="button" class="btn btn-gradient-light btn-rounded btn-sm" id="logout" value="로그아웃">
+					<div style="width: 17%; float: right;" class="row">
+						<input type="button" class="btn btn-gradient-light btn-rounded btn-sm" id="authselect" value="공유폴더설정" style="display: inline;">
+						<input type="button" class="btn btn-gradient-light btn-rounded btn-sm" id="logout" value="로그아웃" style="display: inline;">
 					</div>
 				</div>
 

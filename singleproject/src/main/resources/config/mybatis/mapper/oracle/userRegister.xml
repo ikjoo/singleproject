@@ -9,7 +9,7 @@
 	
 	<insert id="userregister" parameterType="registerVo">
 		insert into tbl_user
-		values(user_seq.nextval,#{userid},#{userpw},#{email1},#{email2},#{salt},#{path})
+		values(user_seq.nextval,#{userid},#{userpw},#{email1},#{email2},#{salt},#{path},default)
 	</insert>
 </mapper>
 

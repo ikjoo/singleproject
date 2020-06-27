@@ -185,4 +185,11 @@ public class IndexController {
 		return mav;
 	}
 	
+	@RequestMapping("/authselect")
+	public Object authSelect() {
+		logger.info("공유폴더 설정 화면 보여주기");
+		
+		return "user/authFolderSelect";
+	}
+	
 }

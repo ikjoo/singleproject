@@ -70,7 +70,7 @@ public class LoginController {
 			}
 			
 			msg="로그인 완료! 환영합니다!";
-			url="/home2";
+			url="/main";
 		}else {
 			msg="로그인 실패";
 			url="/login";

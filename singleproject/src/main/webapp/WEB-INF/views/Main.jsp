@@ -4,7 +4,7 @@
 <div class="content-wrapper">
 	<div class="card">
 		<div class="card-body" style="width: 100%; overflow: auto;">
-			<table class="table" style="width: 100%;">
+			<table class="table text-center" style="width: 100%;">
 				<colgroup>
 					<col style="width:10%;" />
 					<col style="width:50%;" />
@@ -13,7 +13,7 @@
 					<col style="width:10%;" />		
 				</colgroup>
 				<thead style="width: 100%;">
-				  <tr>
+				  <tr class="">
 				    <th scope="col">번호</th>
 				    <th scope="col">제목</th>
 				    <th scope="col">작성자</th>
@@ -32,7 +32,7 @@
 				</tbody>
 			</table>
 			
-				<div class="divPage">
+			<div class="divPage">
 				<!-- 이전블럭으로 이동 -->
 				<c:set var="firstPage" value="${pageVo.firstPage }"/>
 				<c:set var="lastPage" value="${pageVo.lastPage }"/>
@@ -65,12 +65,12 @@
 						<img src="<c:url value='/images/last.JPG'/>" alt="다음 블럭으로">
 						</a>
 					</c:if>
-			
 			</div>
 			<div class="divSearch">
-			
 			   	<form name="frmSearch" method="post" action='<c:url value=''/>'>
-			        <select name="searchCondition">
+			   	<div class="row" style="margin: 0 0 0 0;">
+			   		<div class="col-sm-2"></div>
+			        <select name="searchCondition" class="form-control form-control-sm col-sm-2" style="display: inline;">
 			            <option value="title" 
 			            	<c:if test="${param.searchCondition=='title'}"> 
 			            		selected="selected"
@@ -87,14 +87,16 @@
 			            	</c:if>
 			            	>작성자</option>
 			        </select>   
-			        <input type="text" name="searchKeyword" title="검색어 입력"
+			        <input type="text" name="searchKeyword" title="검색어 입력" class="form-control form-control-sm col-sm-5" style="display: inline;"
 			        value="${param.searchKeyword }">   
-					<input type="submit" value="검색">
+					<input type="submit" class="form-control form-control-sm col-sm-1" style="display: inline;" value="검색">
+					<div class="col-sm-2"></div>
+					</div>
 			    </form>
 			</div>
 			
-			<div class="divBtn">
-			    <a href='<c:url value=''/>' >쓰기</a>
+			<div class="divBtn text-right">
+			    <a href='<c:url value=''/>' class="btn btn-light btn-sm">쓰기</a>
 			</div>
 			
 		</div>

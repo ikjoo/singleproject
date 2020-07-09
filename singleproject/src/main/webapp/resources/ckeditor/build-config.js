@@ -13,10 +13,10 @@
  * (1) https://ckeditor.com/cke4/builder
  *     Visit online builder to build CKEditor from scratch.
  *
- * (2) https://ckeditor.com/cke4/builder/d54e255d8552846d4960ecc78084c97e
+ * (2) https://ckeditor.com/cke4/builder/a8d4fcdb5557177eeaa7f1aeaa921575
  *     Visit online builder to build CKEditor, starting with the same setup as before.
  *
- * (3) https://ckeditor.com/cke4/builder/download/d54e255d8552846d4960ecc78084c97e
+ * (3) https://ckeditor.com/cke4/builder/download/a8d4fcdb5557177eeaa7f1aeaa921575
  *     Straight download link to the latest version of CKEditor (Optimized) with the same setup as before.
  *
  * NOTE:
@@ -52,18 +52,11 @@ var CKBUILDER_CONFIG = {
 		'tests'
 	],
 	plugins : {
-		'Audio' : 1,
 		'a11yhelp' : 1,
 		'about' : 1,
 		'basicstyles' : 1,
 		'bidi' : 1,
 		'blockquote' : 1,
-		'bootstrapTable' : 1,
-		'bootstrapTabs' : 1,
-		'bootstrapVisibility' : 1,
-		'btbutton' : 1,
-		'btgrid' : 1,
-		'btquicktable' : 1,
 		'clipboard' : 1,
 		'colorbutton' : 1,
 		'colordialog' : 1,
@@ -81,16 +74,10 @@ var CKBUILDER_CONFIG = {
 		'font' : 1,
 		'format' : 1,
 		'forms' : 1,
-		'gg' : 1,
 		'horizontalrule' : 1,
-		'html5validation' : 1,
-		'html5video' : 1,
-		'htmlbuttons' : 1,
 		'htmlwriter' : 1,
 		'iframe' : 1,
-		'iframedialog' : 1,
 		'image' : 1,
-		'imageuploader' : 1,
 		'indentblock' : 1,
 		'indentlist' : 1,
 		'justify' : 1,
@@ -128,12 +115,10 @@ var CKBUILDER_CONFIG = {
 		'undo' : 1,
 		'uploadimage' : 1,
 		'wsc' : 1,
-		'wysiwygarea' : 1,
-		'zamanager' : 1
+		'wysiwygarea' : 1
 	},
 	languages : {
 		'en' : 1,
-		'eo' : 1,
 		'ko' : 1
 	}
 };

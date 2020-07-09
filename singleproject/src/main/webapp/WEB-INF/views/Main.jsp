@@ -96,7 +96,7 @@
 			</div>
 			
 			<div class="divBtn text-right">
-			    <a href='<c:url value=''/>' class="btn btn-light btn-sm">쓰기</a>
+			    <a href='<c:url value='/write'/>' class="btn btn-light btn-sm">쓰기</a>
 			</div>
 			
 		</div>

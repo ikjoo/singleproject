@@ -47,7 +47,10 @@ public class CkController {
 						byte[] bytes = file.getBytes();
 						String upPath = req.getSession().getServletContext().getRealPath("img");
 						//String upPath = "D:/lecture/delight/delight2/delight/src/main/webapp/resources/img";
+						logger.info("현재 upPath={}",upPath);
+						upPath=upPath+"/"+(String)session.getAttribute("userid");
 						
+						logger.info("유저 아이디 추가후 upPath={}",upPath);
 						fileName = getUniqueFileName(fileOrginalName);
 						
 						//int idx=fileName.lastIndexOf(".");
@@ -59,7 +62,7 @@ public class CkController {
 							uploadFile.mkdirs();
 						}
 						//이미지 파일
-						String upPath1 = upPath + "/"+ fileName;
+						String upPath1 = upPath+"/"+(String)session.getAttribute("userid") + "/"+ fileName;
 						out = new FileOutputStream(new File(upPath1));
                         out.write(bytes);
                         //8비트 배열 파일
@@ -68,15 +71,17 @@ public class CkController {
 						//out = new FileOutputStream(new File(upPath));
                         //out.write(bytes);
 
+                        logger.info("fileName={}",fileName);
                         
-                        System.out.println("fileName="+fileName);
                         printWriter = resp.getWriter();
                         
                         //String fName=new String(fileName.getBytes("euc-kr"),"8859_1");
-                        System.out.println("fName="+fileName);
+                        
+                        logger.info("fName={}",fileName);
+                        
                         //String fileUrl = req.getContextPath() + "/img/"+fNamefolder +"/"+ fileName;
-                        String fileUrl = req.getContextPath() + "/img/"+fileName;
-                        System.out.println(fileUrl);
+                        String fileUrl = req.getContextPath() + "/img/"+(String)session.getAttribute("userid")+"/"+fileName;
+                        logger.info("fileUrl={}",fileUrl);
                         //<c:url value='/resources/ima/ddd.jpg'/>
                         // json 데이터로 등록
                         // {"uploaded" : 1, "fileName" : "test.jpg", "url" : "/img/test.jpg"}
@@ -87,8 +92,9 @@ public class CkController {
                         
                         String userid=(String) session.getAttribute("userid");
                         Utility.urltag.put(userid, upPath1);
-                        System.out.println("fileUrl="+upPath1);
-                        System.out.println(json);
+                        logger.info("fileUrl={}",upPath1);
+                        logger.info("json={}",json);
+                        
                         printWriter.println(json);
                         
                     }catch(IOException e){

@@ -64,6 +64,7 @@ CREATE TABLE tbl_reboard (
 	step             NUMBER      DEFAULT 0, -- 글의 단계
 	sortno           NUMBER        DEFAULT 0, -- 글의 정렬순서
 	delflag          char              DEFAULT 'N', -- 삭제
+    ckimgup          CLOB          NULL, --에디터이미지파일명
 	filename         VARCHAR2(150) NULL,     -- 업로드파일명
 	filesize         NUMBER       DEFAULT 0, -- 파일사이즈
 	downcount        NUMBER       DEFAULT 0, -- 다운수

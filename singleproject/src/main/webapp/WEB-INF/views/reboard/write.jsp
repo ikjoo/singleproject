@@ -6,17 +6,20 @@
 	<div class="card">
 		<div class="card-body">
 
-            <form name="write" id="write" method="post" action="<c:url value=''/>">
+            <form name="write" id="write" method="post" action="<c:url value='/write'/>">
 				<fieldset>
 					<div id="aa">
 						<label for="title">제목</label>
-						<input type="text" name="title" id="title" class="form-control form-control-fw">
+						<input type="text" name="reboardTitle" id="title" class="form-control form-control-fw">
 					</div>
 					<div id="divdiv">
 						<label for="bo_content">내용</label>
-						<textarea id="bo_content" name="Content"></textarea>
+						<textarea id="bo_content" name="reboardContent"></textarea>
 					</div>
-
+					<div id="divdiv">
+						<label for="upfile">파일</label>
+						<input type="file" name="upfile" id="upfile" class="form-control form-control-fw">
+					</div>
 					<div id="lastdiv">
 						<button type="submit" class="btn btn-gradient-danger btn-rounded btn-fw">작성완료</button>
 					</div>
@@ -60,7 +63,7 @@
 		border: 0;
 		border-bottom: 2px solid #e2e2e2;
 		}
-#title{
+#title,#upfile{
 	width: 90%;
 }
 #lastdiv{
@@ -73,7 +76,8 @@
 	$(function() {
 		$("#mainBoard").addClass("active");
 		
-		CKEDITOR.replace('bo_content',{height: '300', width: '99%'
+		CKEDITOR.replace('bo_content',{height: '300', width: '99%',
+			filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
 		});
 		
 		$("#bo_content").css("display","");

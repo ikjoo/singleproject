@@ -24,7 +24,7 @@
 				<tbody style="width: 100%;">
 					<tr>
 						<td>1</td>
-						<td>제목1</td>
+						<td><img alt="" src="/singleproject/img/back.jpg" /></td>
 						<td>작성자1</td>
 						<td>2020-07-05</td>
 						<td>1232</td>

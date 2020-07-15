@@ -93,7 +93,7 @@
               </a>
             </li>
             <li class="nav-item" id="mainBoard">
-              <a class="nav-link z" href="<c:url value=''/>">
+              <a class="nav-link z" href="<c:url value='/main'/>">
                 <span class="menu-title">답변형 게시판</span>
                 <i class="mdi mdi-note-text menu-icon"></i>
               </a>

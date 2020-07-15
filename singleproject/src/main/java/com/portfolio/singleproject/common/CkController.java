@@ -42,6 +42,7 @@ public class CkController {
 			if(file.getSize() > 0 && StringUtils.isNotBlank(file.getName())){
 				if(file.getContentType().toLowerCase().startsWith("image/")){
 					try{
+						String userid=(String) session.getAttribute("userid");
 						String fileName = file.getName();
 						String fileOrginalName=file.getOriginalFilename();
 						byte[] bytes = file.getBytes();
@@ -62,7 +63,7 @@ public class CkController {
 							uploadFile.mkdirs();
 						}
 						//이미지 파일
-						String upPath1 = upPath+"/"+(String)session.getAttribute("userid") + "/"+ fileName;
+						String upPath1 = upPath + "/"+ fileName;
 						out = new FileOutputStream(new File(upPath1));
                         out.write(bytes);
                         //8비트 배열 파일
@@ -80,7 +81,7 @@ public class CkController {
                         logger.info("fName={}",fileName);
                         
                         //String fileUrl = req.getContextPath() + "/img/"+fNamefolder +"/"+ fileName;
-                        String fileUrl = req.getContextPath() + "/img/"+(String)session.getAttribute("userid")+"/"+fileName;
+                        String fileUrl = req.getContextPath() + "/img/"+userid+"/"+fileName;
                         logger.info("fileUrl={}",fileUrl);
                         //<c:url value='/resources/ima/ddd.jpg'/>
                         // json 데이터로 등록
@@ -90,8 +91,23 @@ public class CkController {
                         json.addProperty("fileName", fileName);
                         json.addProperty("url", fileUrl);
                         
-                        String userid=(String) session.getAttribute("userid");
-                        Utility.urltag.put(userid, upPath1);
+                        
+                        if(Utility.urltag.containsKey(userid)) {
+                        	String oldValue=Utility.urltag.get(userid);
+                        	Utility.urltag.replace(userid,oldValue , oldValue+"|"+upPath1);
+                        }else {
+                        	Utility.urltag.put(userid, upPath1);
+                        }
+                        
+                        if(Utility.ckupimg.containsKey(userid)) {
+                        	String oldValue=Utility.ckupimg.get(userid);
+                        	Utility.ckupimg.replace(userid, oldValue, oldValue+"|"+fileName);
+                        }else {
+                        	Utility.ckupimg.put(userid, fileName);
+                        }
+                        
+                        logger.info("ckupimg={}",Utility.ckupimg.get(userid));
+                        logger.info("fileUrlMap={}",Utility.urltag.get(userid));
                         logger.info("fileUrl={}",upPath1);
                         logger.info("json={}",json);
                         

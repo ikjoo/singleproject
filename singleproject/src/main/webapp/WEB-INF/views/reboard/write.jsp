@@ -46,7 +46,6 @@
 		overflow: auto;
 }
 #write label{
-		float: left;
 		text-align: right;
 		padding: 3px 15px 0 0;
 		clear: left;		
@@ -80,8 +79,9 @@
 			filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
 		});
 		
-		$("#bo_content").css("display","");
-		$("#cke_bo_content").attr("float","right");
+
+		
+		
 		
 		
 	});

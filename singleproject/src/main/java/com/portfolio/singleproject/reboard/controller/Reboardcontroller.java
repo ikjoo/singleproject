@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.portfolio.singleproject.common.Utility;
 import com.portfolio.singleproject.reboard.model.ReboardVO;
@@ -34,10 +35,13 @@ public class Reboardcontroller {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	public Object reboardWritePost(@ModelAttribute ReboardVO reboardVo,HttpSession session) {
 		
+		logger.info("글등록 파라미터 reboardVo={}",reboardVo);
 		
 		
 		
 		return "";
 	}
+	
+	
 
 }

@@ -5,7 +5,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -20,59 +23,49 @@ public class FileUploadUtil {
 	private static final Logger logger
 		=LoggerFactory.getLogger(FileUploadUtil.class);
 	
-	public static final int REVIEW_UPLOAD=1;  //리뷰 사진 업로드
-	public static final int PROMOTION_UPLOAD=2; //홍보 사진 업로드
+	public static final int FILE_UPLOAD=1;	//자료실 파일 업로드
+	public static final int IMAGE_UPLOAD=2;	 //상품 등록-이미지 업로드
 	
 	@Resource(name = "fileUpProperties")
 	private Properties props;
 	
-	public List<String> fileUpload(HttpServletRequest request,
-			int uploadPathType,String userid) {
+	public List<Map<String, Object>> fileUpload(HttpServletRequest request,
+			int uploadPathType) {
 		//파일 업로드 처리
 		MultipartHttpServletRequest multiReq
 			=(MultipartHttpServletRequest)request;
 		
-		List<MultipartFile> mlist=new ArrayList<MultipartFile>();
-		
-		if(multiReq.getFile("reviewPho1")!=null && !multiReq.getFile("reviewPho1").isEmpty()) {
-			mlist.add(multiReq.getFile("reviewPho1"));
-		}
-		if(multiReq.getFile("reviewPho2")!=null && !multiReq.getFile("reviewPho2").isEmpty()) {
-			mlist.add(multiReq.getFile("reviewPho2"));
-		}
-		if(multiReq.getFile("reviewPho3")!=null && !multiReq.getFile("reviewPho3").isEmpty()) {
-			mlist.add(multiReq.getFile("reviewPho3"));
-		}
-		if(multiReq.getFile("promotionPho1")!=null && !multiReq.getFile("promotionPho1").isEmpty()) {
-			mlist.add(multiReq.getFile("promotionPho1"));
-		}
-		if(multiReq.getFile("fileName")!=null && !multiReq.getFile("fileName").isEmpty()) {
-			mlist.add(multiReq.getFile("fileName"));
-		}
+		Map<String, MultipartFile> fileMap=multiReq.getFileMap();
 		
 		//결과를 넣을 List
-		List<String> list
-			=new ArrayList<String>();
-		System.out.println("mlist.size()="+mlist.size());
-		for(int i=0; i<mlist.size();i++) {
-			MultipartFile tempFile=mlist.get(i);
-			System.out.println(mlist.get(i));
+		List<Map<String, Object>> list
+			=new ArrayList<Map<String,Object>>();
+		
+		Iterator<String> iter=fileMap.keySet().iterator();
+		while(iter.hasNext()) {
+			String key=iter.next();
+			MultipartFile tempFile=fileMap.get(key);
+			
 			//업로드된 경우
 			if(!tempFile.isEmpty()) {
+				//변경전 (원래) 파일명
+				String originFileName=tempFile.getOriginalFilename();
 				//변경된 파일명
-				String fileName=tempFile.getOriginalFilename();
-				fileName=getUniqueFileName(fileName);
-				list.add(fileName);
-				logger.info("uploadType={}", uploadPathType);
+				String fileName=getUniqueFileName(originFileName);
+				//파일 크기
+				long fileSize=tempFile.getSize();
+				
+				Map<String, Object> map
+					=new HashMap<String, Object>();
+				map.put("originalFileName", originFileName);
+				map.put("fileName", fileName);
+				map.put("fileSize", fileSize);
+				
+				list.add(map);
+				
 				//업로드 처리
 				//업로드할 경로 구하기
-				String upPath=getFilePath(request, uploadPathType);
-				upPath=upPath+"/"+userid;
-				File folder=new File(upPath);
-				
-				if(!folder.exists()) {
-					folder.mkdirs();
-				}
+				String upPath=getFilePath(request,uploadPathType);
 				
 				File file=new File(upPath, fileName);
 				
@@ -85,12 +78,12 @@ public class FileUploadUtil {
 				}			
 				
 			}
-		}//for
+		}//while
 		
 		return list;
 	}
 
-	public String getFilePath(HttpServletRequest request, int uploadPathType) {
+	public String getFilePath(HttpServletRequest request,int uploadPathType) {
 		//업로드할 경로 구하기
 		String path="";
 		
@@ -98,23 +91,23 @@ public class FileUploadUtil {
 		logger.info("type={}", type);
 		
 		if(type.equals("test")) {  //테스트 경로
-			if(uploadPathType==REVIEW_UPLOAD) {
-				path=props.getProperty("review.upload.path.test");
-			}else if(uploadPathType==PROMOTION_UPLOAD) {
-				path=props.getProperty("promotion.upload.path.test");
+			if(uploadPathType==FILE_UPLOAD) {
+				path=props.getProperty("file.upload.path.test");
+			}else if(uploadPathType==IMAGE_UPLOAD) {
+				path=props.getProperty("imageFile.upload.path.test");
 			}
 		}else { //배포시 실제 경로
-			String upDir="";
-			if(uploadPathType==REVIEW_UPLOAD) {			
-				upDir=props.getProperty("review.upload.path");
-			}else if(uploadPathType==PROMOTION_UPLOAD) {
-				upDir=props.getProperty("promotion.upload.path");
+			if(uploadPathType==FILE_UPLOAD) {
+				String upDir=props.getProperty("file.upload.path");
+				path
+				=request.getSession().getServletContext().getRealPath(upDir);
+				
+				//config.getServletContext().getRealPath(upDir);
+			}else if(uploadPathType==IMAGE_UPLOAD) {
+				String upDir=props.getProperty("imageFile.upload.path");
+				path
+				=request.getSession().getServletContext().getRealPath(upDir);
 			}
-			System.out.println("ddd");
-			path
-			=request.getSession().getServletContext().getRealPath(upDir);
-			
-			//config.getServletContext().getRealPath(upDir);
 		}
 		logger.info("업로드 경로  path={}", path);
 		

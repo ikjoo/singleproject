@@ -6,7 +6,7 @@
 	<div class="card">
 		<div class="card-body">
 
-            <form name="write" id="write" method="post" action="<c:url value='/write'/>">
+            <form name="write" id="write" method="post" enctype="multipart/form-data" action="<c:url value='/write'/>">
 				<fieldset>
 					<div id="aa">
 						<label for="title">제목</label>
@@ -17,7 +17,7 @@
 						<textarea id="bo_content" name="reboardContent"></textarea>
 					</div>
 					<div id="divdiv">
-						<label for="upfile">파일</label>
+						<label for="upfile">첨부파일</label>
 						<input type="file" name="upfile" id="upfile" class="form-control form-control-fw">
 					</div>
 					<div id="lastdiv">

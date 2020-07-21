@@ -17,12 +17,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.portfolio.singleproject.common.FileUploadUtil;
 import com.portfolio.singleproject.common.Utility;
+import com.portfolio.singleproject.login.model.LoginServices;
 import com.portfolio.singleproject.reboard.model.ReboardVO;
+import com.portfolio.singleproject.register.model.RegisterVO;
 
 @Controller
 public class Reboardcontroller {
 	
 	private static final Logger logger=LoggerFactory.getLogger(Reboardcontroller.class);
+	
+	@Autowired
+	private LoginServices loginService;
 	
 	@Autowired
 	private FileUploadUtil fileUtil;
@@ -62,6 +67,23 @@ public class Reboardcontroller {
 			fileSize=(Long) map.get("fileSize");
 			
 		}//for
+		
+		reboardVo.setFilename(fileName);
+		reboardVo.setOriginalfilename(originalFileName);
+		reboardVo.setFilesize(fileSize);
+		
+		RegisterVO registerVo=loginService.userInfoByuserid(userid);
+		
+		int userNo=registerVo.getNo();
+		
+		reboardVo.setNo(userNo);
+		
+		String ckimg=Utility.ckupimg.get(userid);
+		
+		logger.info("ckimg={}",ckimg);
+		
+		reboardVo.setCkimgup(ckimg);
+		
 		
 		
 		return "";

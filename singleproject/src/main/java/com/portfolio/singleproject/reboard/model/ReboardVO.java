@@ -12,8 +12,15 @@ public class ReboardVO {
 	private int step;
 	private int sortno;
 	private String delflag;
+	private String ckimgup;
+	public String getCkimgup() {
+		return ckimgup;
+	}
+	public void setCkimgup(String ckimgup) {
+		this.ckimgup = ckimgup;
+	}
 	private String filename;
-	private String filesize;
+	private Long filesize;
 	private int downcount;
 	private String originalfilename;
 	private int no;
@@ -77,10 +84,10 @@ public class ReboardVO {
 	public void setFilename(String filename) {
 		this.filename = filename;
 	}
-	public String getFilesize() {
+	public Long getFilesize() {
 		return filesize;
 	}
-	public void setFilesize(String filesize) {
+	public void setFilesize(Long filesize) {
 		this.filesize = filesize;
 	}
 	public int getDowncount() {
@@ -105,10 +112,13 @@ public class ReboardVO {
 	public String toString() {
 		return "ReboardVO [reboardNo=" + reboardNo + ", reboardTitle=" + reboardTitle + ", reboardContent="
 				+ reboardContent + ", reboardReg=" + reboardReg + ", readcount=" + readcount + ", groupno=" + groupno
-				+ ", step=" + step + ", sortno=" + sortno + ", delflag=" + delflag + ", filename=" + filename
-				+ ", filesize=" + filesize + ", downcount=" + downcount + ", originalfilename=" + originalfilename
-				+ ", no=" + no + "]";
+				+ ", step=" + step + ", sortno=" + sortno + ", delflag=" + delflag + ", ckimgup=" + ckimgup
+				+ ", filename=" + filename + ", filesize=" + filesize + ", downcount=" + downcount
+				+ ", originalfilename=" + originalfilename + ", no=" + no + "]";
 	}
+
+
+	
 	
 	
 }

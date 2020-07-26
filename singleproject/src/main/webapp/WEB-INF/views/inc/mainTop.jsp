@@ -29,7 +29,7 @@
   <body>
     <div class="container-scroller">
       <!-- partial:../../partials/_navbar.html -->
-      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+      <nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 d-flex flex-row">
         <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
           <a class="navbar-brand brand-logo" href="<c:url value='/main'/>"><span class="display-3 text-danger" style="font-weight: bold">Single</span></a>
           <a class="navbar-brand brand-logo-mini" href="<c:url value='/main'/>"><span class="display-3 text-danger" style="font-weight: bold">S</span></a>

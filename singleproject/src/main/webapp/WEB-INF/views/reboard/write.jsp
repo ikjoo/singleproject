@@ -22,6 +22,7 @@
 					</div>
 					<div id="lastdiv">
 						<button type="submit" class="btn btn-gradient-danger btn-rounded btn-fw">작성완료</button>
+						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="over">오버레이</button>
 					</div>
 				</fieldset>
 			</form>
@@ -30,10 +31,24 @@
 		</div>
 	</div>
 </div>
+
 <%@ include file="../inc/mainBottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 <style type="text/css">
-
+#overray{
+position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        width: 100%;
+        height: 0;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.6);
+        -webkit-transition: .6s ease;
+        transition: .6s ease;
+        z-index: 1000;
+}
 #write{
 	width: 100%;
 	margin: 0 auto;
@@ -79,7 +94,11 @@
 			filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
 		});
 		
-
+	
+		$("#over").click(function() {
+			$("#overray").css("display","block");
+			$("#overray").css("height","100%");
+		});
 		
 		
 		

@@ -14,6 +14,7 @@
       </div>
       <!-- page-body-wrapper ends -->
     </div>
+    
     <!-- container-scroller -->
     <!-- plugins:js -->
     <script src="<c:url value='/resources/assets/vendors/js/vendor.bundle.base.js'/>" ></script>
@@ -42,5 +43,6 @@
     <!-- endinject -->
     <!-- Custom js for this page -->
     <!-- End custom js for this page -->
+    <div class="body-overlay" id="overray">오버레이</div>
   </body>
 </html>

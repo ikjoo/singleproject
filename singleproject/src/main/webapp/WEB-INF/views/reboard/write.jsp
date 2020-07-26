@@ -31,12 +31,15 @@
 		</div>
 	</div>
 </div>
+<div class="body-overlay" id="overray">
+<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="cancle">취소</button>
 
+</div>
 <%@ include file="../inc/mainBottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
 <style type="text/css">
 #overray{
-position: absolute;
+position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
@@ -48,6 +51,16 @@ position: absolute;
         -webkit-transition: .6s ease;
         transition: .6s ease;
         z-index: 1000;
+}
+#cancle{
+	font-size: 20px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -webkit-transform: translate(-50%, -50%);
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        text-align: center;
 }
 #write{
 	width: 100%;
@@ -100,7 +113,10 @@ position: absolute;
 			$("#overray").css("height","100%");
 		});
 		
-		
+		$("#cancle").click(function() {
+			$("#overray").css("display","block");
+			$("#overray").css("height","0");
+		});
 		
 		
 	});

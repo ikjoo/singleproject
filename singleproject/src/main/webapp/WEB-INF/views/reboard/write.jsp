@@ -22,7 +22,7 @@
 						
 					</div>
 					<div id="lastdiv">
-						<button type="submit" class="btn btn-gradient-danger btn-rounded btn-fw">작성완료</button>
+						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="over">오버레이</button>
 					</div>
 				</fieldset>
@@ -144,8 +144,9 @@ div#viewLoading div.progressSpeed span.kbps strong{font-weight:400;}
 			$("#overray").css("height","0");
 		});
 		
-		//  --------------------------------------------------------------------------------------------- 
-		var fileUploadBtnElem = $("span.sendData");
+
+		/* --------------------------------------------------------------------------------------------- */
+		var fileUploadBtnElem = $("#bfsub");
 		var fileUploadFrm = $("#fileform");	
 		
 
@@ -173,8 +174,11 @@ div#viewLoading div.progressSpeed span.kbps strong{font-weight:400;}
 		});					
 
 		$(fileUploadBtnElem).click(function(){
+			$("#overray").css("display","block");
+			$("#overray").css("height","100%");
+			
 			$(fileUploadFrm).ajaxSubmit({
-				url : '',
+				url : '<c:url value="/fileupload"/>',
 				type : 'POST',
 				data : $(fileUploadFrm).serialize(),
 				success : function(data){
@@ -219,7 +223,8 @@ div#viewLoading div.progressSpeed span.kbps strong{font-weight:400;}
 		};
 		
 		    
+
 		 /* --------------------------------------------------------------------------------------------- */
-		
-	});
+
+
 </script>

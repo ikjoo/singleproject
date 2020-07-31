@@ -126,105 +126,103 @@ div#viewLoading div.progressSpeed span.kbps strong{font-weight:400;}
 
 
 <script type="text/javascript">
-	$(function() {
-		$("#mainBoard").addClass("active");
-		
-		CKEDITOR.replace('bo_content',{height: '300', width: '99%',
-			filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
-		});
-		
+$(function() {
+	$("#mainBoard").addClass("active");
 	
-		$("#over").click(function() {
-			$("#overray").css("display","block");
-			$("#overray").css("height","100%");
+	CKEDITOR.replace('bo_content',{height: '300', width: '99%',
+		filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
+	});
+	
+
+	$("#over").click(function() {
+		$("#overray").css("display","block");
+		$("#overray").css("height","100%");
+	});
+	
+	$("#cancle").click(function() {
+		$("#overray").css("display","block");
+		$("#overray").css("height","0");
+	});
+
+
+	var fileUploadBtnElem = $("#bfsub");
+	var fileUploadFrm = $("#fileform");	
+	
+
+	//ajax Progress image view Elem
+	var viewLoadingImgElem = $("div#viewLoading");
+	//$(viewLoadingImgElem).hide();	//초기로딩시에는 이미지를 숨긴다.
+	
+	var intervalID = 0;
+	//ajax 요청시작과 완료시의 프로그레스 이미지 element의 동작
+	$("#viewLoading").ajaxStart(function(){
+		alert("ajaxstart");
+		// 로딩이미지의 위치 및 크기조절	
+		$(viewLoadingImgElem).css('position', 'absolute');
+		$(viewLoadingImgElem).css('left', $("body").offset().left);
+		$(viewLoadingImgElem).css('top', $("body").offset().top);
+		$(viewLoadingImgElem).css('width', $(document).width());
+		$(viewLoadingImgElem).css('height', $(document).height());
+				
+		intervalID = setInterval(function(){			
+			getFileUploadProgress();	//ajax요청중에 파일업로드 상태를 주기적으로 요청한다.	
+		},50);
+		$(this).fadeIn(250);
+	}).ajaxStop(function(){		
+		clearInterval(intervalID); //Stop updating		
+		$(this).fadeOut(250);
+	});					
+
+	$(fileUploadBtnElem).click(function(){
+		$("#overray").css("display","block");
+		$("#overray").css("height","100%");
+		
+		$(fileUploadFrm).ajaxSubmit({
+			url : '<c:url value="/fileupload"/>',
+			type : 'POST',
+			data : $(fileUploadFrm).serialize(),
+			success : function(data){
+				alert("전송 완료 되었습니다.");				
+				clearInterval(intervalID); //Stop updating				
+			},error : function(){
+				alert("전송 실패 했습니다.");
+			}
+		});	
+	});
+    
+	//파일업로드 상태를 주기적으로 확인해서 가져온다.
+	var getFileUploadProgress = function(){
+		$.ajax({
+			url : '<c:url value="/uploadstatus"/>',
+			success : function(data){
+				var jsonData = eval('('+ data +')');
+
+				$("#viewLoading").html(										
+						"<div class='progressTitle'>" +
+						"	<span><strong>업로드 진행상태</strong></span>" +		
+						"</div>" +
+						"<div class='progressWrapper'>" +
+						"	<div class='progresspercent'>" +
+						"		<span class='percentwrapper'>"+
+						"			<span class='pgbar'>&nbsp;</span>"+
+						"			<span class='pgpercent'><strong>"+ jsonData.percent+"%</strong></span>" +				
+						"		</span>" +
+						"	</div>"+
+						"	<div class='progressfilereadsize'>"+
+						"		<span class='readsize'>" + jsonData.bytesread + "<strong> bytes</strong></span>" +
+						"		<span class='divider'><strong>/</strong></span>" +
+						"		<span class='filelength'>" + jsonData.contentlength + "<strong> bytes</strong></span>" +
+						"	</div>" +
+						"	<div class='progressSpeed'>" +
+						"		<span class='kbps'>" + jsonData.kbps + "<strong> kbps</strong></span>" +
+						"	</div>" +								
+						"</div>"	);										
+				$(viewLoadingImgElem).find("div.progresspercent span.pgbar").width(jsonData.percent+"%").addClass("pgbarbgcolor");				
+			}
 		});
-		
-		$("#cancle").click(function() {
-			$("#overray").css("display","block");
-			$("#overray").css("height","0");
-		});
-		
-
-		/* --------------------------------------------------------------------------------------------- */
-		var fileUploadBtnElem = $("#bfsub");
-		var fileUploadFrm = $("#fileform");	
-		
-
-		//ajax Progress image view Elem
-		var viewLoadingImgElem = $("div#viewLoading");
-		//$(viewLoadingImgElem).hide();	//초기로딩시에는 이미지를 숨긴다.
-		
-		var intervalID = 0;
-		//ajax 요청시작과 완료시의 프로그레스 이미지 element의 동작
-		$(viewLoadingImgElem).ajaxStart(function(){
-			// 로딩이미지의 위치 및 크기조절	
-			$(viewLoadingImgElem).css('position', 'absolute');
-			$(viewLoadingImgElem).css('left', $("body").offset().left);
-			$(viewLoadingImgElem).css('top', $("body").offset().top);
-			$(viewLoadingImgElem).css('width', $(document).width());
-			$(viewLoadingImgElem).css('height', $(document).height());
-					
-			intervalID = setInterval(function(){			
-				getFileUploadProgress();	//ajax요청중에 파일업로드 상태를 주기적으로 요청한다.	
-			},50);
-			$(this).fadeIn(250);
-		}).ajaxStop(function(){		
-			clearInterval(intervalID); //Stop updating		
-			$(this).fadeOut(250);
-		});					
-
-		$(fileUploadBtnElem).click(function(){
-			$("#overray").css("display","block");
-			$("#overray").css("height","100%");
-			
-			$(fileUploadFrm).ajaxSubmit({
-				url : '<c:url value="/fileupload"/>',
-				type : 'POST',
-				data : $(fileUploadFrm).serialize(),
-				success : function(data){
-					alert("전송 완료 되었습니다.");				
-					clearInterval(intervalID); //Stop updating				
-				},error : function(){
-					alert("전송 실패 했습니다.");
-				}
-			});	
-		});
-	    
-		//파일업로드 상태를 주기적으로 확인해서 가져온다.
-		var getFileUploadProgress = function(){
-			$.ajax({
-				url : '',
-				success : function(data){
-					var jsonData = eval('('+ data +')');
-
-					$(viewLoadingImgElem).html(										
-							"<div class='progressTitle'>" +
-							"	<span><strong>업로드 진행상태</strong></span>" +		
-							"</div>" +
-							"<div class='progressWrapper'>" +
-							"	<div class='progresspercent'>" +
-							"		<span class='percentwrapper'>"+
-							"			<span class='pgbar'>&nbsp;</span>"+
-							"			<span class='pgpercent'><strong>"+ jsonData.percent+"%</strong></span>" +				
-							"		</span>" +
-							"	</div>"+
-							"	<div class='progressfilereadsize'>"+
-							"		<span class='readsize'>" + jsonData.bytesread + "<strong> bytes</strong></span>" +
-							"		<span class='divider'><strong>/</strong></span>" +
-							"		<span class='filelength'>" + jsonData.contentlength + "<strong> bytes</strong></span>" +
-							"	</div>" +
-							"	<div class='progressSpeed'>" +
-							"		<span class='kbps'>" + jsonData.kbps + "<strong> kbps</strong></span>" +
-							"	</div>" +								
-							"</div>"	);										
-					$(viewLoadingImgElem).find("div.progresspercent span.pgbar").width(jsonData.percent+"%").addClass("pgbarbgcolor");				
-				}
-			});
-		};
-		
-		    
-
-		 /* --------------------------------------------------------------------------------------------- */
+	};
+	
+	});
 
 
 </script>

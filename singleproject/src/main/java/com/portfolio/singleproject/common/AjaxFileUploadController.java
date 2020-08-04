@@ -82,6 +82,7 @@ public class AjaxFileUploadController {
 
 			// Process the uploaded items
 			Iterator<FileItem> iter = items.iterator();
+			logger.info("여기까진 오나?");
 			while (iter.hasNext()) {
 				FileItem fileItem = (FileItem) iter.next();
 				if (fileItem.isFormField()) {

@@ -6,7 +6,7 @@
 	<div class="card">
 		<div class="card-body">
 
-            <form name="write" id="fileform" method="post" enctype="multipart/form-data" action="<c:url value='/write'/>">
+            <form name="write" id="fileform" method="post" enctype="multipart/form-data">
 				<fieldset>
 					<div id="aa">
 						<label for="title">제목</label>
@@ -156,7 +156,6 @@ $(function() {
 	var intervalID = 0;
 	//ajax 요청시작과 완료시의 프로그레스 이미지 element의 동작
 	$("#viewLoading").ajaxStart(function(){
-		alert("ajaxstart");
 		// 로딩이미지의 위치 및 크기조절	
 		$(viewLoadingImgElem).css('position', 'absolute');
 		$(viewLoadingImgElem).css('left', $("body").offset().left);
@@ -179,8 +178,11 @@ $(function() {
 		
 		$(fileUploadFrm).ajaxSubmit({
 			url : '<c:url value="/fileupload"/>',
+			enctype: 'multipart/form-data',
 			type : 'POST',
-			data : $(fileUploadFrm).serialize(),
+			processData: false, // 필수 
+			contentType: false,
+			data : $("#fileform").serialize(),
 			success : function(data){
 				alert("전송 완료 되었습니다.");				
 				clearInterval(intervalID); //Stop updating				

@@ -2,8 +2,11 @@ package com.portfolio.singleproject.common;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -14,10 +17,15 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -27,18 +35,17 @@ public class AjaxFileUploadController {
 
 	@Resource(name = "fileUpProperties")
 	private Properties props;
-	
+
 	@RequestMapping("/fileupload")
 	public ModelAndView uploadDate(HttpServletRequest request, HttpServletResponse response, HttpSession session) throws Exception{
 		logger.info("ajax 업로드 시작");
-		
+
 		String serverFileName = "";
 		String serverFileKeyVal = "";
 		String fileSize = "";
 		String userid=(String) session.getAttribute("userid");
-		
-		FileUploadUtil fileUtil=new FileUploadUtil();
-		
+
+
 		String type=props.getProperty("file.upload.type");
 		logger.info("type={}",type);
 		String upDir=props.getProperty("file.upload.path");
@@ -47,14 +54,14 @@ public class AjaxFileUploadController {
 		//String upPath = "D:/lecture/delight/delight2/delight/src/main/webapp/resources/img";
 		logger.info("현재 upPath={}",upPath);
 		upPath=upPath+"/"+userid;
-		
+
 		logger.info("유저 아이디 추가후 upPath={}",upPath);
-		
+
 		File uploadFile = new File(upPath);
 		if(!uploadFile.exists()){
 			uploadFile.mkdirs();
 		}
-		
+
 		// Check that we have a file upload request
 		boolean isMultipart = ServletFileUpload.isMultipartContent(request);
 		logger.info("isMultipart={}",isMultipart);
@@ -76,13 +83,17 @@ public class AjaxFileUploadController {
 			progressListener.setHttpSession(session);
 			//프로그레스 리스너를 파일업로드시 추가한다.
 			upload.setProgressListener(progressListener);		    
-
+			
 			// Parse the request
-			List<FileItem> items = upload.parseRequest(request);
-
+			System.out.println("request="+request.toString());
+			List items = upload.parseRequest(request);
+			System.out.println("parseReq="+upload.parseRequest(request).toString());
+			System.out.println(items.isEmpty());
 			// Process the uploaded items
-			Iterator<FileItem> iter = items.iterator();
+			Iterator iter = items.iterator();
 			logger.info("여기까진 오나?");
+			System.out.println(iter.hasNext());
+			
 			while (iter.hasNext()) {
 				FileItem fileItem = (FileItem) iter.next();
 				if (fileItem.isFormField()) {
@@ -109,8 +120,8 @@ public class AjaxFileUploadController {
 
 
 	}
-	
-	
+
+
 	//파일업로드 상태를 가져온다.
 	@RequestMapping("/uploadstatus")
 	public ModelAndView getFileUploadStatus(HttpServletRequest request, HttpServletResponse response, HttpSession session){
@@ -120,5 +131,9 @@ public class AjaxFileUploadController {
 		mav.setViewName("common/upstatus");	
 		return mav;
 	}
+
+		
+
+
 
 }

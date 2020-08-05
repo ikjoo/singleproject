@@ -25,6 +25,7 @@
     href="<c:url value='/resources/assets/css/style.css'/>">
     <!-- End layout styles -->
     <script type="text/javascript" src="<c:url value='/resources/js/jquery-3.4.1.min.js'/>"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
   </head>
   <body>
     <div class="container-scroller">

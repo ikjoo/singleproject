@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.portfolio.singleproject.common.FileUploadUtil;
 import com.portfolio.singleproject.common.Utility;
 import com.portfolio.singleproject.login.model.LoginServices;
+import com.portfolio.singleproject.reboard.model.ReboardService;
 import com.portfolio.singleproject.reboard.model.ReboardVO;
 import com.portfolio.singleproject.register.model.RegisterVO;
 
@@ -31,6 +32,9 @@ public class Reboardcontroller {
 	
 	@Autowired
 	private FileUploadUtil fileUtil;
+	
+	@Autowired
+	private ReboardService reboardService;
 	
 	@RequestMapping(value = "/write", method = RequestMethod.GET)
 	public Object reboardWrite(HttpSession session) {
@@ -84,9 +88,24 @@ public class Reboardcontroller {
 		
 		reboardVo.setCkimgup(ckimg);
 		
+		logger.info("기타 등등 setting하고 reboardVo={}",reboardVo);
 		
+		int res=reboardService.reboardWrite(reboardVo);
 		
-		return "";
+		String msg="", url="";
+		
+		if(res>0) {
+			msg="글 등록 되었습니다.";
+			url="/main";
+		}else {
+			msg="등록 중 오류 발생";
+			url="/write";
+		}
+		
+		model.addAttribute("url", url);
+		model.addAttribute("msg",msg);
+		
+		return "common/message";
 	}
 	
 	

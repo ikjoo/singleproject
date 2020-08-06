@@ -6,7 +6,7 @@
 	<div class="card">
 		<div class="card-body">
 
-            <form name="write" id="fileform" method="post" enctype="multipart/form-data">
+            <form name="write" id="fileform" method="post" action="<c:url value='/write'/>" enctype="multipart/form-data">
 				<fieldset>
 					<div id="aa">
 						<label for="title">제목</label>
@@ -23,7 +23,6 @@
 					</div>
 					<div id="lastdiv">
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
-						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="over">오버레이</button>
 					</div>
 				</fieldset>
 			</form>
@@ -36,9 +35,8 @@
 <div id="progressdiv">
 	<!-- Ajax Progress Status -->
 <div id="viewLoading">
+파일 업로드 중입니다.
 </div>
-	<hr>
-	<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="cancle">취소</button>
 </div>
 
 </div>
@@ -70,6 +68,7 @@ position: fixed;
         -ms-transform: translate(-50%, -50%);
         transform: translate(-50%, -50%);
         text-align: center;
+        height: 100%;
 }
 #fileform{
 	width: 100%;
@@ -105,22 +104,14 @@ position: fixed;
 #lastdiv{
 	text-align: center;
 }
-div#viewLoading {text-align:center;padding-top:120px;filter:alpha(opacity=60);opacity: alpha*0.6;background-color:#222222;color:#bcbfc4;}
-div#viewLoading div.progressTitle{text-align:left;border:2px solid #111111;border-bottom:1px solid #111111;padding:15px 0 15px 0;width:99.2%;}
-div#viewLoading div.progressTitle span{padding-left:3px;padding-bottom:5px;}
-div#viewLoading div.progressWrapper{border:1px solid #111111;width:99.2%;text-align:center;}
-div#viewLoading div.progressWrapper div.progresspercent{background-color:#1a1a1a;height:40px;border:1px solid #000000;}
-div#viewLoading div.progressWrapper div.progresspercent span.percentwrapper{line-height:38px;}
-div#viewLoading div.progressWrapper div.progresspercent span.percentwrapper span.pgbar{display:block;float:left;background-color:#fecf23;width:90%;}
-div#viewLoading div.progressWrapper div.progresspercent span.percentwrapper span.pgpercent{position:absolute;left:30%;right:30%;color:#c0c0c0;}
-div#viewLoading div.progressWrapper div.progresspercent span.percentwrapper span.pgpercent strong{font-weight:bold;}
-div#viewLoading div.progressfilereadsize{margin:0 0 5px 0;height:40px;border:1px solid #111111;}
-div#viewLoading div.progressfilereadsize span{line-height:40px;}
-div#viewLoading div.progressfilereadsize span.divider strong{font-weight:400;}
-div#viewLoading div.progressSpeed{margin:0 0 5px 0;height:40px;border:1px solid #111111;text-align:center;}
-div#viewLoading div.progressSpeed span.kbps{line-height:40px;}
-div#viewLoading div.progressSpeed span.kbps strong{font-weight:400;}
-.pgbarbgcolor{background-color:#fecf23;}
+#viewLoading{
+	background-color: white;
+	display: block;
+	background-size: cover;
+	margin-top: 50%;
+	text-align: center;
+	color: black;
+}
 
 </style>
 
@@ -134,97 +125,14 @@ $(function() {
 	});
 	
 
-	$("#over").click(function() {
+	$("#bfsub").click(function() {
 		$("#overray").css("display","block");
 		$("#overray").css("height","100%");
-	});
-	
-	$("#cancle").click(function() {
-		$("#overray").css("display","block");
-		$("#overray").css("height","0");
+		$("#fileform").submit();
 	});
 
-
-	var fileUploadBtnElem = $("#bfsub");
-	var fileUploadFrm = $("#fileform");	
 	
-
-	//ajax Progress image view Elem
-	var viewLoadingImgElem = $("div#viewLoading");
-	//$(viewLoadingImgElem).hide();	//초기로딩시에는 이미지를 숨긴다.
-	
-	var intervalID = 0;
-	//ajax 요청시작과 완료시의 프로그레스 이미지 element의 동작
-	$("#viewLoading").ajaxStart(function(){
-		// 로딩이미지의 위치 및 크기조절	
-		$(viewLoadingImgElem).css('position', 'absolute');
-		$(viewLoadingImgElem).css('left', $("body").offset().left);
-		$(viewLoadingImgElem).css('top', $("body").offset().top);
-		$(viewLoadingImgElem).css('width', $(document).width());
-		$(viewLoadingImgElem).css('height', $(document).height());
-				
-		intervalID = setInterval(function(){			
-			getFileUploadProgress();	//ajax요청중에 파일업로드 상태를 주기적으로 요청한다.	
-		},50);
-		$(this).fadeIn(250);
-	}).ajaxStop(function(){		
-		clearInterval(intervalID); //Stop updating		
-		$(this).fadeOut(250);
-	});					
-
-	$(fileUploadBtnElem).click(function(){
-		$("#overray").css("display","block");
-		$("#overray").css("height","100%");
-		
-		$(fileUploadFrm).ajaxSubmit({
-			url : '<c:url value="/fileupload"/>',
-			enctype: 'multipart/form-data',
-			type : 'POST',
-			processData: false, // 필수 
-			contentType: false,
-			data : $("#fileform").serialize(),
-			success : function(data){
-				alert("전송 완료 되었습니다.");				
-				clearInterval(intervalID); //Stop updating				
-			},error : function(){
-				alert("전송 실패 했습니다.");
-			}
-		});	
-	});
-    
-	//파일업로드 상태를 주기적으로 확인해서 가져온다.
-	var getFileUploadProgress = function(){
-		$.ajax({
-			url : '<c:url value="/uploadstatus"/>',
-			success : function(data){
-				var jsonData = eval('('+ data +')');
-
-				$("#viewLoading").html(										
-						"<div class='progressTitle'>" +
-						"	<span><strong>업로드 진행상태</strong></span>" +		
-						"</div>" +
-						"<div class='progressWrapper'>" +
-						"	<div class='progresspercent'>" +
-						"		<span class='percentwrapper'>"+
-						"			<span class='pgbar'>&nbsp;</span>"+
-						"			<span class='pgpercent'><strong>"+ jsonData.percent+"%</strong></span>" +				
-						"		</span>" +
-						"	</div>"+
-						"	<div class='progressfilereadsize'>"+
-						"		<span class='readsize'>" + jsonData.bytesread + "<strong> bytes</strong></span>" +
-						"		<span class='divider'><strong>/</strong></span>" +
-						"		<span class='filelength'>" + jsonData.contentlength + "<strong> bytes</strong></span>" +
-						"	</div>" +
-						"	<div class='progressSpeed'>" +
-						"		<span class='kbps'>" + jsonData.kbps + "<strong> kbps</strong></span>" +
-						"	</div>" +								
-						"</div>"	);										
-				$(viewLoadingImgElem).find("div.progresspercent span.pgbar").width(jsonData.percent+"%").addClass("pgbarbgcolor");				
-			}
-		});
-	};
-	
-	});
+});
 
 
 </script>

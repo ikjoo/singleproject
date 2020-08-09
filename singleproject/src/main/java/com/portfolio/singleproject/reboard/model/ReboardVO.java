@@ -2,7 +2,9 @@ package com.portfolio.singleproject.reboard.model;
 
 import java.sql.Timestamp;
 
-public class ReboardVO {
+import com.portfolio.singleproject.common.SearchVO;
+
+public class ReboardVO extends SearchVO{
 	private int reboardNo;
 	private String reboardTitle ;
 	private String reboardContent;
@@ -13,17 +15,11 @@ public class ReboardVO {
 	private int sortno;
 	private String delflag;
 	private String ckimgup;
-	public String getCkimgup() {
-		return ckimgup;
-	}
-	public void setCkimgup(String ckimgup) {
-		this.ckimgup = ckimgup;
-	}
 	private String filename;
 	private Long filesize;
 	private int downcount;
 	private String originalfilename;
-	private int no;
+	private String userid;
 	public int getReboardNo() {
 		return reboardNo;
 	}
@@ -78,6 +74,12 @@ public class ReboardVO {
 	public void setDelflag(String delflag) {
 		this.delflag = delflag;
 	}
+	public String getCkimgup() {
+		return ckimgup;
+	}
+	public void setCkimgup(String ckimgup) {
+		this.ckimgup = ckimgup;
+	}
 	public String getFilename() {
 		return filename;
 	}
@@ -102,11 +104,11 @@ public class ReboardVO {
 	public void setOriginalfilename(String originalfilename) {
 		this.originalfilename = originalfilename;
 	}
-	public int getNo() {
-		return no;
+	public String getUserid() {
+		return userid;
 	}
-	public void setNo(int no) {
-		this.no = no;
+	public void setUserid(String userid) {
+		this.userid = userid;
 	}
 	@Override
 	public String toString() {
@@ -114,11 +116,11 @@ public class ReboardVO {
 				+ reboardContent + ", reboardReg=" + reboardReg + ", readcount=" + readcount + ", groupno=" + groupno
 				+ ", step=" + step + ", sortno=" + sortno + ", delflag=" + delflag + ", ckimgup=" + ckimgup
 				+ ", filename=" + filename + ", filesize=" + filesize + ", downcount=" + downcount
-				+ ", originalfilename=" + originalfilename + ", no=" + no + "]";
+				+ ", originalfilename=" + originalfilename + ", userid=" + userid + "]";
 	}
 
-
 	
+
 	
 	
 }

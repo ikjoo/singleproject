@@ -75,12 +75,9 @@ public class Reboardcontroller {
 		reboardVo.setFilename(fileName);
 		reboardVo.setOriginalfilename(originalFileName);
 		reboardVo.setFilesize(fileSize);
+		reboardVo.setUserid(userid);
 		
-		RegisterVO registerVo=loginService.userInfoByuserid(userid);
-		
-		int userNo=registerVo.getNo();
-		
-		reboardVo.setNo(userNo);
+		logger.info("셋팅후 reboardVo={}",reboardVo);
 		
 		String ckimg=Utility.ckupimg.get(userid);
 		

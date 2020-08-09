@@ -33,7 +33,6 @@ DROP TABLE tbl_reboard;
 
 -- 유저
 CREATE TABLE tbl_user (
-	no        NUMBER             NOT NULL, -- 번호
 	userid    VARCHAR2(50)       NOT NULL, -- 아이디
 	userpw    VARCHAR2(500byte)  NOT NULL, -- 비밀번호
 	email1    VARCHAR2(900)      NULL,     -- 이메일1
@@ -69,7 +68,7 @@ CREATE TABLE tbl_reboard (
 	filesize         NUMBER       DEFAULT 0, -- 파일사이즈
 	downcount        NUMBER       DEFAULT 0, -- 다운수
 	originalfilename VARCHAR2(150) NULL,     -- 이름변경전 업로드파일명
-	no               NUMBER        NULL      -- 번호
+	userid    VARCHAR2(50)        NULL      -- 아이디
 );
 
 -- 자료형 답변 게시판

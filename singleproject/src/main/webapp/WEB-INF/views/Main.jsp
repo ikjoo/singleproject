@@ -1,6 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="inc/mainTop.jsp" %>
+<form action="<c:url value='/admin/announcement/annInc.do'/>" 
+	name="frmPage" method="post">
+	<input type="hidden" name="searchCondition" 
+		value="${param.searchCondition}" id="aa1">
+	<input type="hidden" name="searchKeyword" 
+		value="${param.searchKeyword}" id="aa2">
+	<input type="hidden" name="currentPage" value="${pagingInfo.currentPage }"  id="aa3">
+
+</form>
+
+
 <div class="content-wrapper">
 	<div class="card">
 		<div class="card-body" style="width: 100%; overflow: auto;">
@@ -22,6 +33,30 @@
 				  </tr>
 				</thead>
 				<tbody style="width: 100%;">
+				<c:if test="${empty list }">
+					<tr>
+						<td colspan="5">등록된 게시글이 없습니다.</td>
+					</tr>
+				</c:if>
+				<c:if test="${!empty list }">
+					<c:set var="idx" value="0" />
+					<c:forEach var="vo" items="${list }">
+							<tr>
+							<td>${vo.reboardNo }</td>
+							<td><a href="#">${vo.reboardTitle }</a>
+							<sup class="text-info"><c:if test="${vo.annTop=='Y' }">상단고정</c:if></sup>
+							<sub class="text-primary"><c:if test="${vo.annShow=='Y' }">노출</c:if></sub>
+							</td>
+							<td>${vo.userid }</td>
+							<td><fmt:formatDate value="${vo.annRegdate }" pattern="yyyy-MM-dd"/>
+							</td>
+							<td>
+							<button type="button" class="btn btn-gradient-danger btn-sm">삭제</button>
+							</td>
+							</tr>
+						<c:set var="idx" value="${idx+1}" />
+					</c:forEach>
+				</c:if>
 					<tr>
 						<td>1</td>
 						<td><img alt="" src="/singleproject/img/back.jpg" /></td>
@@ -111,4 +146,9 @@
 	$(function() {
 		$("#mainBoard").addClass("active");
 	});
+	
+	function pageFunc(curPage){
+		document.frmPage.currentPage.value=curPage;
+		document.frmPage.submit();
+	}
 </script>

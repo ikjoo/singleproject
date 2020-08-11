@@ -5,20 +5,20 @@
 <mapper namespace="com.mybatis.mapper.reBoard">
 	
 	<insert id="reboardWrite" parameterType="reboardVo">
-		<selectKey order="BEFORE" resultType="int" keyProperty="reNo">
+		<selectKey order="BEFORE" resultType="int" keyProperty="reboardNo">
 			select reboard_seq.nextval from dual
 		</selectKey>
 		insert into 
 		tbl_reboard(reboard_no,reboard_title,reboard_content,groupno
-		,step,sortno,ckimgup,filename,filesize,originalfilename,no)
+		,step,sortno,ckimgup,filename,filesize,originalfilename,userid)
 		
-		values(#{reNo},#{reboardTitle},#{reboardContent},#{reNo}
-		,#{step}+1,#{sortno}+1,#{ckimgup},#{filename},#{filesize},#{originalfilename},#{no})
+		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{reboardReg}
+		,#{step}+1,#{sortno}+1,#{ckimgup},#{filename},#{filesize},#{originalfilename},#{userid})
 	</insert>
 	
 	<sql id="searchWhere">
 		<if test="searchKeyword!=null and searchKeyword!=''">
-			and ${searchCondition} like '%' || #{searchKeyword} || '%'
+			where ${searchCondition} like '%' || #{searchKeyword} || '%'
 		</if>
 	</sql>
 	
@@ -42,6 +42,16 @@
 	<select id="searchTotal" parameterType="reboardVo" resultType="int">
 		select count(*) from tbl_reboard
 		<include refid="searchWhere"></include>
+	</select>
+	
+	<update id="readcountUp" parameterType="int">
+		update tbl_reboard
+		set readcount=readcount+1
+		where reboard_no=#{reNo}
+	</update>
+	
+	<select id="reboardSelByNo" parameterType="int" resultType="reboardVo">
+		select * from tbl_reboard where reboard_no=#{reboardNo}
 	</select>
 </mapper>
 

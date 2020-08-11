@@ -116,8 +116,10 @@ public class ReboardVO extends SearchVO{
 				+ reboardContent + ", reboardReg=" + reboardReg + ", readcount=" + readcount + ", groupno=" + groupno
 				+ ", step=" + step + ", sortno=" + sortno + ", delflag=" + delflag + ", ckimgup=" + ckimgup
 				+ ", filename=" + filename + ", filesize=" + filesize + ", downcount=" + downcount
-				+ ", originalfilename=" + originalfilename + ", userid=" + userid + "]";
+				+ ", originalfilename=" + originalfilename + ", userid=" + userid + ", toString()=" + super.toString()
+				+ "]";
 	}
+	
 
 	
 

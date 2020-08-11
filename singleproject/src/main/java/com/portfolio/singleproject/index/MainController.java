@@ -43,7 +43,9 @@ public class MainController {
 		int totalRecord=reboardService.searchTotal(reboardVo);
 		logger.info("totalRecord={}",totalRecord);
 		
-		pagingInfo.setBlockSize(totalRecord);
+		pagingInfo.setTotalRecord(totalRecord);
+		
+		logger.info("pagingInfo={}",pagingInfo);
 		
 		model.addAttribute("list", list);
 		model.addAttribute("pagingInfo", pagingInfo);

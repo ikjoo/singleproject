@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@include file="inc/mainTop.jsp" %>
-<form action="<c:url value='/admin/announcement/annInc.do'/>" 
+<form action="<c:url value=''/>" 
 	name="frmPage" method="post">
 	<input type="hidden" name="searchCondition" 
 		value="${param.searchCondition}" id="aa1">
@@ -39,85 +39,63 @@
 					</tr>
 				</c:if>
 				<c:if test="${!empty list }">
-					<c:set var="idx" value="0" />
 					<c:forEach var="vo" items="${list }">
 							<tr>
 							<td>${vo.reboardNo }</td>
-							<td><a href="#">${vo.reboardTitle }</a>
-							<sup class="text-info"><c:if test="${vo.annTop=='Y' }">상단고정</c:if></sup>
-							<sub class="text-primary"><c:if test="${vo.annShow=='Y' }">노출</c:if></sub>
+							<td><a href="<c:url value='/readCnt?reNo=${vo.reboardNo }'/>" >${vo.reboardTitle }</a>
 							</td>
 							<td>${vo.userid }</td>
-							<td><fmt:formatDate value="${vo.annRegdate }" pattern="yyyy-MM-dd"/>
+							<td><fmt:formatDate value="${vo.reboardReg }" pattern="yyyy-MM-dd"/>
 							</td>
-							<td>
-							<button type="button" class="btn btn-gradient-danger btn-sm">삭제</button>
+							<td>${vo.readcount }
 							</td>
 							</tr>
-						<c:set var="idx" value="${idx+1}" />
 					</c:forEach>
 				</c:if>
-					<tr>
-						<td>1</td>
-						<td><img alt="" src="/singleproject/img/back.jpg" /></td>
-						<td>작성자1</td>
-						<td>2020-07-05</td>
-						<td>1232</td>
-					</tr>
+					
 				</tbody>
 			</table>
 			
-			<div class="divPage">
-				<!-- 이전블럭으로 이동 -->
-				<c:set var="firstPage" value="${pageVo.firstPage }"/>
-				<c:set var="lastPage" value="${pageVo.lastPage }"/>
-				<c:set var="totalPage" value="${pageVo.totalPage }"/>
-				<c:set var="currentPage" value="${pageVo.currentPage }"/>
-				
-				<c:if test="${fistPage>1 }">
-				
-					<%-- <a href="<%=request.getContextPath() %>/board/list.do?currentPage=<%=firstPage-1%>&searchCondition=<%=condition %>&searchKeyword=<%=keyword %>"> --%>
-					<a href="#" onclick="pageFunc(${firstPage-1})">
-						<img src="<c:url value='/images/first.JPG'/>" alt="이전 블럭으로">
-					</a>
-				
-				</c:if>
-				<!-- 페이지 번호 추가 -->					
-				<!-- [1][2][3][4][5][6][7][8][9][10] -->
-				<c:forEach var="i" begin="${firstPage }" end="${lastPage }">
-					<c:if test="${i==currentPage }">
-						<span>${i }</span>
-					</c:if>
-					<c:if test="${totalPage>i }">
-						<a href="#" onclick="pageFunc(${i})">[${i}]</a>
-					</c:if>
-			
-					<!--  페이지 번호 끝 -->
-					</c:forEach>
-					<!-- 다음블럭으로 이동 -->
-					<c:if test="${lastPage<totalPage }">
-						<a href="#" onclick="pageFunc(${lastPage+1})">
-						<img src="<c:url value='/images/last.JPG'/>" alt="다음 블럭으로">
-						</a>
-					</c:if>
-			</div>
+			<div class="divPage text-center">
+	 <!-- 이전블럭으로 이동 -->
+	<c:if test="${pagingInfo.firstPage>1 }">	
+		<button type="button" class='btn btn-social-icon btn-outline-youtube btn-sm' onclick="pageFunc(${pagingInfo.firstPage-1})"> &lt;&lt;</button>
+	</c:if>
+	<!-- 페이지 번호 추가 -->						
+	
+	<c:forEach var="i" begin="${pagingInfo.firstPage }" 
+		end="${pagingInfo.lastPage }">
+			<c:if test="${i==pagingInfo.currentPage }">
+				<span class='btn btn-success btn-sm'>${i }</span>
+			</c:if>
+			<c:if test="${i!=pagingInfo.currentPage }">
+				<input type='button' value="${i }" class='btn btn-danger btn-sm' onclick="pageFunc(${i})">
+			</c:if>
+	</c:forEach>
+	<!--  페이지 번호 끝 -->
+	
+	<!-- 다음블럭으로 이동 -->
+	<c:if test="${pagingInfo.lastPage<pagingInfo.totalPage }">
+		<button type="button" class="btn btn-social-icon btn-outline-youtube btn-sm" onclick="pageFunc(${pagingInfo.lastPage+1})"> &gt;&gt;</button>
+	</c:if>	
+	</div>
 			<div class="divSearch">
-			   	<form name="frmSearch" method="post" action='<c:url value=''/>'>
+			   	<form name="frmSearch" method="post" action='<c:url value='/main'/>'>
 			   	<div class="row" style="margin: 0 0 0 0;">
 			   		<div class="col-sm-2"></div>
 			        <select name="searchCondition" class="form-control form-control-sm col-sm-2" style="display: inline;">
-			            <option value="title" 
-			            	<c:if test="${param.searchCondition=='title'}"> 
+			            <option value="reboard_title" 
+			            	<c:if test="${param.searchCondition=='reboard_title'}"> 
 			            		selected="selected"
 			            	</c:if>
 			            >제목</option>
-			            <option value="content" 
-			            <c:if test="${param.searchCondition=='content'}"> 
+			            <option value="reboard_content" 
+			            <c:if test="${param.searchCondition=='reboard_content'}"> 
 			            		selected="selected"
 			            	</c:if>
 			            	>내용</option>
-			            <option value="name" 
-			             <c:if test="${param.searchCondition=='name'}"> 
+			            <option value="userid" 
+			             <c:if test="${param.searchCondition=='userid'}"> 
 			            		selected="selected"
 			            	</c:if>
 			            	>작성자</option>

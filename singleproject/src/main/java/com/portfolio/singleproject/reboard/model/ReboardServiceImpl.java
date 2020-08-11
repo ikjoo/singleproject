@@ -25,5 +25,15 @@ public class ReboardServiceImpl implements ReboardService{
 	public int searchTotal(ReboardVO reboardVo) {
 		return reboardDao.searchTotal(reboardVo);
 	}
+
+	@Override
+	public int readcountUp(int reNo) {
+		return reboardDao.readcountUp(reNo);
+	}
+
+	@Override
+	public ReboardVO reboardSelByNo(int reboardNo) {
+		return reboardDao.reboardSelByNo(reboardNo);
+	}
 	
 }

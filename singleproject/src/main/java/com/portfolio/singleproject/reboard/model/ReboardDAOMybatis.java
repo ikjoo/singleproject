@@ -28,6 +28,16 @@ public class ReboardDAOMybatis implements ReboardDAO{
 	public int searchTotal(ReboardVO reboardVo) {
 		return sqlSession.selectOne(namespace+"searchTotal", reboardVo);
 	}
+
+	@Override
+	public int readcountUp(int reNo) {
+		return sqlSession.update(namespace+"readcountUp", reNo);
+	}
+
+	@Override
+	public ReboardVO reboardSelByNo(int reboardNo) {
+		return sqlSession.selectOne(namespace+"reboardSelByNo", reboardNo);
+	}
 	
 	
 }

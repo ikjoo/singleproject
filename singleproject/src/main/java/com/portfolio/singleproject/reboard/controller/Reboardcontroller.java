@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.portfolio.singleproject.common.FileUploadUtil;
 import com.portfolio.singleproject.common.Utility;
@@ -105,6 +106,29 @@ public class Reboardcontroller {
 		return "common/message";
 	}
 	
+	@RequestMapping("/readCnt")
+	public Object readcountUp(@RequestParam int reNo) {
+		logger.info("detail전 조회수 증가 파라미터 reboardNo={}",reNo);
+		
+		int res=reboardService.readcountUp(reNo);
+		
+		logger.info("조회수 증가 결과 res={}",res);
+		
+		return "redirect:/detail?reboardNo="+reNo;
+		
+	}
 	
+	@RequestMapping("/detail")
+	public Object reboardDetail(@RequestParam int reboardNo,Model model) {
+		logger.info("게시글 상세보기 파라미터 reboardNo={}",reboardNo);
+		
+		ReboardVO vo=reboardService.reboardSelByNo(reboardNo);
+		
+		logger.info("상세 보기 검색 결과 vo={}",vo);
+		
+		model.addAttribute("vo", vo);
+		
+		return "reboard/detail";
+	}
 
 }

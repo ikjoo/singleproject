@@ -22,10 +22,10 @@
 		<div>
 			<span class="sp1">첨부파일</span> 
 			<span>
-			<c:if test="${!empty vo.filename }">
+			<c:if test="${!empty vo.originalfilename }">
 			<img src="<c:url value='/resources/images/file.gif'/>">
 			 <a href="<c:url value=''/>">
-			 ${vo.filename }
+			 ${vo.originalfilename }
 			 </a>
 			  다운 : ${vo.downcount }
 			</c:if>
@@ -38,7 +38,7 @@
 
 		<div class="text-center">
 			<a href
-			='<c:url value="/edit?no=${param.reoboardNo}"/>'>수정</a> |
+			='<c:url value="/edit?no=${param.reboardNo}"/>'>수정</a> |
         	<a href
         	='<c:url value="/delete?no=${param.reboardNo }&groupNo=${vo.groupno }&step=${vo.step }"/>'>삭제</a> |
         	<a href

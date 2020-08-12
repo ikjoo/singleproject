@@ -6,7 +6,7 @@
 	<div class="card">
 		<div class="card-body">
 
-            <form name="write" id="fileform" method="post" action="<c:url value='/write'/>" enctype="multipart/form-data">
+            <form name="write" id="fileform" method="post" action="<c:url value='/edit'/>" enctype="multipart/form-data">
 				<fieldset>
 					<div id="aa">
 						<label for="title">제목</label>
@@ -17,13 +17,16 @@
 						<textarea id="bo_content" name="reboardContent"></textarea>
 					</div>
 					<div id="divdiv">
-						<label for="upfile">첨부파일</label>
-						<input type="file" name="upfile" id="upfile" class="form-control form-control-fw" value="${vo.filename }">
-						
+						<label for="upfile">첨부파일<sup>(파일 새로 선택 시 이전 파일은 삭제)</sup></label>
+						<input type="file" name="upfile" id="upfile" class="form-control form-control-fw">
+						<hr>
+						<label for="beforeupfile">이미올려진 파일</label>
+						<p id="beforeupfile">${vo.originalfilename }</p>
 					</div>
 					<div id="lastdiv">
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">수정완료</button>
 					</div>
+					<input type="hidden" name="brfck" id="brfck">
 				</fieldset>
 			</form>
 
@@ -35,7 +38,7 @@
 <div id="progressdiv">
 	<!-- Ajax Progress Status -->
 <div id="viewLoading">
-파일 업로드 중입니다.
+${vo.reboardContent }
 </div>
 </div>
 
@@ -120,19 +123,34 @@ position: fixed;
 $(function() {
 	$("#mainBoard").addClass("active");
 	
+	
+	
 	CKEDITOR.replace('bo_content',{height: '300', width: '99%',
 		filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
 	});
 	
+	CKEDITOR.instances.bo_content.setData('${vo.reboardContent}');
 
 	$("#bfsub").click(function() {
-		$("#overray").css("display","block");
-		$("#overray").css("height","100%");
-		$("#fileform").submit();
+		
+		var im=img_find();
+		
+		$("#brfck").val(im);
 	});
 
 	
 });
+
+function img_find() {
+    var imgs = $("#viewLoading img");
+    var imgSrcs = [];
+
+    for (var i = 0; i < imgs.length; i++) {
+        imgSrcs.push(imgs[i].src);
+    }
+
+    return imgSrcs;
+}
 
 
 </script>

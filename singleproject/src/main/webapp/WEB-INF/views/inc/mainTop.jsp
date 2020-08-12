@@ -88,7 +88,7 @@
                   <!--change to offline or busy as needed-->
                 </div>
                 <div class="nav-profile-text d-flex flex-column">
-                  <span class="font-weight-bold mb-2"><%-- ${sessionScope.userid} --%></span>
+                  <span class="font-weight-bold mb-2">${sessionScope.userid}</span>
                   <span class="text-secondary text-small">로그인한 아이디</span>
                 </div>
               </a>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../inc/mainTop.jsp" %>
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/formLayout.css'/>" />
 
 <div class="content-wrapper">
 	<div class="card">
@@ -30,18 +31,18 @@
 			</c:if>
 			</span>
 		</div>
-		<hr>
+
 		<div class="lastDiv">		
 			<p class="content">${vo.reboardContent }</p>
 		</div>
-		<hr>
+
 		<div class="text-center">
 			<a href
-			='<c:url value="/reBoard/edit.do?no=${param.reoboardNo}"/>'>수정</a> |
+			='<c:url value="/edit?no=${param.reoboardNo}"/>'>수정</a> |
         	<a href
-        	='<c:url value="/reBoard/delete.do?no=${param.reboardNo }&groupNo=${vo.groupno }&step=${vo.step }"/>'>삭제</a> |
+        	='<c:url value="/delete?no=${param.reboardNo }&groupNo=${vo.groupno }&step=${vo.step }"/>'>삭제</a> |
         	<a href
-			='<c:url value="/reBoard/reply.do?no=${param.reboardNo}"/>'>답변</a> | 
+			='<c:url value="/reply?no=${param.reboardNo}"/>'>답변</a> | 
         	<a href='<c:url value="/main"/>'>
         		목록</a>			
 		</div>

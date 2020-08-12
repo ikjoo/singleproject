@@ -5,7 +5,7 @@
           <footer class="footer">
             <div class="d-sm-flex justify-content-center justify-content-sm-between">
               <span class="text-muted text-center text-sm-left d-block d-sm-inline-block"> Singleproject - 포트폴리오</span>
-              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"><%-- ${sessionScope.adminUserName} --%> 님 환영합니다 <i class="mdi mdi-heart text-danger"></i></span>
+              <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center"> ${sessionScope.userid} 님 환영합니다 <i class="mdi mdi-heart text-danger"></i></span>
             </div>
           </footer>
           <!-- partial -->

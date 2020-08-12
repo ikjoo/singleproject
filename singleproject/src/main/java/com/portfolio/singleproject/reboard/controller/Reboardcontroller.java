@@ -130,5 +130,19 @@ public class Reboardcontroller {
 		
 		return "reboard/detail";
 	}
+	
+	@RequestMapping(value = "/edit", method = RequestMethod.GET)
+	public Object reboardEdit(@RequestParam int no,Model model) {
+		logger.info("게시글 수정 파라미터 no={}",no);
+		
+		ReboardVO vo=reboardService.reboardSelByNo(no);
+		
+		logger.info("검색결과 vo={}",vo);
+		
+		model.addAttribute("vo", vo);
+		
+		return "reboard/edit";
+		
+	}
 
 }

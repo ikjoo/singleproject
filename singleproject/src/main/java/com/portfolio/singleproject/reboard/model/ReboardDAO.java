@@ -9,4 +9,5 @@ public interface ReboardDAO {
 	int searchTotal(ReboardVO reboardVo);
 	int readcountUp(int reNo);
 	ReboardVO reboardSelByNo(int reboardNo);
+	int reboardEdit(ReboardVO reboardVo);
 }

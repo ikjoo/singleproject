@@ -225,10 +225,12 @@ public class Reboardcontroller {
 			reboardVo.setFilename(fileName);
 			reboardVo.setOriginalfilename(originalFileName);
 			reboardVo.setFilesize(fileSize);
+			reboardVo.setDowncount(0);
 		}else {
 			reboardVo.setFilename(vo.getFilename());
 			reboardVo.setOriginalfilename(vo.getOriginalfilename());
 			reboardVo.setFilesize(vo.getFilesize());
+			reboardVo.setDowncount(vo.getDowncount());
 		}
 		
 		String url="", msg="";

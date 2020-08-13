@@ -38,6 +38,11 @@ public class ReboardDAOMybatis implements ReboardDAO{
 	public ReboardVO reboardSelByNo(int reboardNo) {
 		return sqlSession.selectOne(namespace+"reboardSelByNo", reboardNo);
 	}
+
+	@Override
+	public int reboardEdit(ReboardVO reboardVo) {
+		return sqlSession.update(namespace+"reboardEdit", reboardVo);
+	}
 	
 	
 }

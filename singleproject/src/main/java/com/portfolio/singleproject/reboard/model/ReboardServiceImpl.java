@@ -35,5 +35,10 @@ public class ReboardServiceImpl implements ReboardService{
 	public ReboardVO reboardSelByNo(int reboardNo) {
 		return reboardDao.reboardSelByNo(reboardNo);
 	}
+
+	@Override
+	public int reboardEdit(ReboardVO reboardVo) {
+		return reboardDao.reboardEdit(reboardVo);
+	}
 	
 }

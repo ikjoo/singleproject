@@ -37,10 +37,12 @@
 		</div>
 
 		<div class="text-center">
+		<c:if test="${sessionScope.userid==vo.userid }">
 			<a href
 			='<c:url value="/edit?no=${param.reboardNo}"/>'>수정</a> |
         	<a href
         	='<c:url value="/delete?no=${param.reboardNo }&groupNo=${vo.groupno }&step=${vo.step }"/>'>삭제</a> |
+		</c:if>
         	<a href
 			='<c:url value="/reply?no=${param.reboardNo}"/>'>답변</a> | 
         	<a href='<c:url value="/main"/>'>

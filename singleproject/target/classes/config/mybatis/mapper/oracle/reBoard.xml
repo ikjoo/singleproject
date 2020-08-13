@@ -9,10 +9,10 @@
 			select reboard_seq.nextval from dual
 		</selectKey>
 		insert into 
-		tbl_reboard(reboard_no,reboard_title,reboard_content,groupno
+		tbl_reboard(reboard_no, reboard_title, reboard_content, groupno
 		,step,sortno,ckimgup,filename,filesize,originalfilename,userid)
 		
-		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{reboardReg}
+		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{reboardNo}
 		,#{step}+1,#{sortno}+1,#{ckimgup},#{filename},#{filesize},#{originalfilename},#{userid})
 	</insert>
 	
@@ -53,6 +53,15 @@
 	<select id="reboardSelByNo" parameterType="int" resultType="reboardVo">
 		select * from tbl_reboard where reboard_no=#{reboardNo}
 	</select>
+	
+	<update id="reboardEdit" parameterType="reboardVo">
+		update tbl_reboard
+		set reboard_title=#{reboardTitle} ,reboard_content=#{reboardContent}
+		,ckimgup=#{ckimgup} ,filename= #{filename}
+		,filesize=#{filesize} ,downcount= #{downcount}
+		,originalfilename=#{originalfilename}
+		where reboard_no= #{reboardNo}
+	</update>
 </mapper>
 
 

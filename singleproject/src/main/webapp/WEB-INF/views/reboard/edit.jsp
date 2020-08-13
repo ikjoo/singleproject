@@ -27,6 +27,7 @@
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">수정완료</button>
 					</div>
 					<input type="hidden" name="brfck" id="brfck">
+					<input type="hidden" name="boardNo" id="boardNo" value="${vo.reboardNo }">
 				</fieldset>
 			</form>
 
@@ -38,10 +39,14 @@
 <div id="progressdiv">
 	<!-- Ajax Progress Status -->
 <div id="viewLoading">
+파일 업로드 중입니다.
+</div>
+</div>
+</div>
+<div>
+<div id="viewLoading2">
 ${vo.reboardContent }
 </div>
-</div>
-
 </div>
 <%@ include file="../inc/mainBottom.jsp" %>
 <script type="text/javascript" src="<c:url value='/resources/ckeditor/ckeditor.js'/>"></script>
@@ -115,6 +120,20 @@ position: fixed;
 	text-align: center;
 	color: black;
 }
+#viewLoading2{
+	position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        overflow: hidden;
+        width: 100%;
+        height: 0;
+        color: #fff;
+        background: rgba(0, 0, 0, 0.6);
+        -webkit-transition: .6s ease;
+        transition: .6s ease;
+        z-index: 1000;
+}
 
 </style>
 
@@ -133,16 +152,21 @@ $(function() {
 
 	$("#bfsub").click(function() {
 		
+		$("#overray").css("display","block");
+		$("#overray").css("height","100%");
+		
 		var im=img_find();
 		
 		$("#brfck").val(im);
+		
+		$("#fileform").submit();
 	});
 
 	
 });
 
 function img_find() {
-    var imgs = $("#viewLoading img");
+    var imgs = $("#viewLoading2 img");
     var imgSrcs = [];
 
     for (var i = 0; i < imgs.length; i++) {

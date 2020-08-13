@@ -1,5 +1,7 @@
 package com.portfolio.singleproject.reboard.controller;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.portfolio.singleproject.common.FileUploadUtil;
 import com.portfolio.singleproject.common.Utility;
@@ -27,9 +30,6 @@ import com.portfolio.singleproject.register.model.RegisterVO;
 public class Reboardcontroller {
 	
 	private static final Logger logger=LoggerFactory.getLogger(Reboardcontroller.class);
-	
-	@Autowired
-	private LoginServices loginService;
 	
 	@Autowired
 	private FileUploadUtil fileUtil;
@@ -145,4 +145,96 @@ public class Reboardcontroller {
 		
 	}
 
+	@RequestMapping(value = "/edit", method = RequestMethod.POST)
+	public Object reboardEditpost(@ModelAttribute ReboardVO reboardVo,HttpSession session,
+			HttpServletRequest request,Model model,@RequestParam int boardNo
+			,@RequestParam String brfck) {
+		logger.info("게시글 수정하기 파라미터 reboardVo={},boardNo={}",reboardVo,boardNo);
+		logger.info("brfck={}",brfck);
+		
+		String userid=(String) session.getAttribute("userid");
+		
+		ReboardVO vo=reboardService.reboardSelByNo(boardNo);
+		
+		String[] newCk=brfck.split("/");
+		
+		logger.info("newCk={}",newCk.toString());
+		
+		List<String> newCkList= new ArrayList<String>();
+		
+		for(String aa:newCk) {
+			newCkList.add(aa);
+		}
+		
+		String[] oldCk=vo.getCkimgup().split("|");
+		
+		logger.info("oldCk={}",oldCk.toString());
+		
+		List<String> delCkDir= new ArrayList<String>();
+		String newCkDir="";
+		for(String old:oldCk) {
+			for(int i=0;i<newCkList.size();i++) {
+				String newckdir=newCkList.get(i);
+				if(!newckdir.equals(old)) {
+					delCkDir.add(userid+"/"+old);
+				}else {
+					newCkDir+=old+"|";
+					newCkList.remove(i);
+				}
+			}
+		}
+		
+		if(newCkList.size()>0) {
+			for(String aa:newCkList) {
+				newCkDir+=aa+"|";
+			}
+		}
+		newCkDir=newCkDir.substring(0, newCkDir.length()-1);
+		
+		logger.info("새로 등록할 newCkDir={}",newCkDir);
+		reboardVo.setCkimgup(newCkDir);
+		logger.info("delCkDir={}",delCkDir.toString());
+		
+		
+		//아래 삭제 부분은 수정하고나서로 옮기기
+		if(delCkDir.size()>0) {
+			for(int i=0;i<delCkDir.size();i++) {
+				String path=request.getSession().getServletContext().getRealPath("img")+"/"+delCkDir.get(i);
+				File delfile=new File(path);
+				if(delfile.exists()) {
+					boolean bol=delfile.delete();
+					logger.info("oldck삭제 결과 bol={}",bol);
+				}
+			}
+		}
+		
+		MultipartFile uppartfile=(MultipartFile) request.getAttribute("upfile");
+		if(!uppartfile.isEmpty()) {
+			//파일 업로드
+			List<Map<String, Object>> list=fileUtil.fileUpload(request,FileUploadUtil.FILE_UPLOAD);
+			String fileName="", originalFileName="";
+			long fileSize=0;
+			
+			for(Map<String, Object> map: list) {
+				originalFileName=(String) map.get("originalFileName");
+				fileName=(String) map.get("fileName");
+				fileSize=(Long) map.get("fileSize");
+				
+			}//for
+			
+			reboardVo.setFilename(fileName);
+			reboardVo.setOriginalfilename(originalFileName);
+			reboardVo.setFilesize(fileSize);
+		}else {
+			reboardVo.setFilename(vo.getFilename());
+			reboardVo.setOriginalfilename(vo.getOriginalfilename());
+			reboardVo.setFilesize(vo.getFilesize());
+		}
+		
+		String url="", msg="";
+		
+		
+		return "common/message";
+		
+	}
 }

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.portfolio.singleproject.common.FileUploadUtil;
 import com.portfolio.singleproject.common.Utility;
@@ -179,7 +180,7 @@ public class Reboardcontroller {
 			
 			
 			if(vo.getCkimgup().contains("?")) {
-				String[] oldCk=vo.getCkimgup().split("?");
+				String[] oldCk=vo.getCkimgup().split("\\?");
 				for(String aa:oldCk) {
 					oldCkList.add(aa);
 				}
@@ -227,7 +228,8 @@ public class Reboardcontroller {
 				}
 			}
 			
-			MultipartFile uppartfile=(MultipartFile) request.getAttribute("upfile");
+			MultipartHttpServletRequest req= (MultipartHttpServletRequest) request;
+			MultipartFile uppartfile=req.getFile("upfile");
 			if(uppartfile!=null && !uppartfile.isEmpty()) {
 				logger.info("새파일 업로드 시작");
 				//파일 업로드

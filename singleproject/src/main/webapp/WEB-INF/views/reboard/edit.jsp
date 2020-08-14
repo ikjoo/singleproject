@@ -148,7 +148,7 @@ $(function() {
 		filebrowserUploadUrl: "<c:url value='/ckimageup'/>"
 	});
 	
-	CKEDITOR.instances.bo_content.setData('${vo.reboardContent}');
+	CKEDITOR.instances.bo_content.setData($("#viewLoading2").html());
 
 	$("#bfsub").click(function() {
 		

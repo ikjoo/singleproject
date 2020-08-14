@@ -94,14 +94,14 @@ public class CkController {
                         
                         if(Utility.urltag.containsKey(userid)) {
                         	String oldValue=Utility.urltag.get(userid);
-                        	Utility.urltag.replace(userid,oldValue , oldValue+"|"+upPath1);
+                        	Utility.urltag.replace(userid,oldValue , oldValue+"?"+upPath1);
                         }else {
                         	Utility.urltag.put(userid, upPath1);
                         }
                         
                         if(Utility.ckupimg.containsKey(userid)) {
                         	String oldValue=Utility.ckupimg.get(userid);
-                        	Utility.ckupimg.replace(userid, oldValue, oldValue+"|"+fileName);
+                        	Utility.ckupimg.replace(userid, oldValue, oldValue+"?"+fileName);
                         }else {
                         	Utility.ckupimg.put(userid, fileName);
                         }

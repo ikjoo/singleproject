@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.Properties;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -30,7 +32,7 @@ public class FileUploadUtil {
 	private Properties props;
 	
 	public List<Map<String, Object>> fileUpload(HttpServletRequest request,
-			int uploadPathType) {
+			int uploadPathType,HttpSession session) {
 		//파일 업로드 처리
 		MultipartHttpServletRequest multiReq
 			=(MultipartHttpServletRequest)request;
@@ -65,7 +67,7 @@ public class FileUploadUtil {
 				
 				//업로드 처리
 				//업로드할 경로 구하기
-				String upPath=getFilePath(request,uploadPathType);
+				String upPath=getFilePath(request,uploadPathType,session);
 				
 				File file=new File(upPath, fileName);
 				
@@ -83,10 +85,11 @@ public class FileUploadUtil {
 		return list;
 	}
 
-	public String getFilePath(HttpServletRequest request,int uploadPathType) {
+	public String getFilePath(HttpServletRequest request,int uploadPathType
+			,HttpSession session) {
 		//업로드할 경로 구하기
 		String path="";
-		
+		String userid=(String) session.getAttribute("userid");
 		String type=props.getProperty("file.upload.type");
 		logger.info("type={}", type);
 		
@@ -100,7 +103,7 @@ public class FileUploadUtil {
 			if(uploadPathType==FILE_UPLOAD) {
 				String upDir=props.getProperty("file.upload.path");
 				path
-				=request.getSession().getServletContext().getRealPath(upDir);
+				=request.getSession().getServletContext().getRealPath(upDir)+"/"+userid;
 				
 				//config.getServletContext().getRealPath(upDir);
 			}else if(uploadPathType==IMAGE_UPLOAD) {

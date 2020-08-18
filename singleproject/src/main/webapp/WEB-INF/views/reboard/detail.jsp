@@ -40,8 +40,8 @@
 		<c:if test="${sessionScope.userid==vo.userid }">
 			<a href
 			='<c:url value="/edit?no=${param.reboardNo}"/>'>수정</a> |
-        	<a href
-        	='<c:url value="/delete?no=${param.reboardNo }&groupNo=${vo.groupno }&step=${vo.step }"/>'>삭제</a> |
+        	<a id="delA" href
+        	='#'>삭제</a> |
 		</c:if>
         	<a href
 			='<c:url value="/reply?no=${param.reboardNo}"/>'>답변</a> | 
@@ -70,7 +70,11 @@
 $(function() {
 	$("#mainBoard").addClass("active");
 	
-
+	$("#delA").click(function() {
+		if(alert("삭제 하시겠습니까?")){
+			location.href='<c:url value="/delete?no=${param.reboardNo }&groupNo=${vo.groupno }&step=${vo.step }"/>';
+		}
+	});
 
 	
 });

@@ -46,7 +46,13 @@
 			<exclude-mapping path="/register/idChk"/>
 			<exclude-mapping path="/register/useremail"/>
 			<exclude-mapping path="/register/emailcer"/>
+			<exclude-mapping path="/edit"/>
 			<beans:ref bean="loginInterceptor"/>
+		</interceptor>
+		
+		<interceptor>
+			<mapping path="/edit"/>
+			<beans:ref bean="editDelInterceptor"/>
 		</interceptor>
 	
 	</interceptors>

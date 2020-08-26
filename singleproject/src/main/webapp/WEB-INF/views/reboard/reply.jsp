@@ -7,6 +7,10 @@
 		<div class="card-body">
 
             <form name="write" id="fileform" method="post" action="<c:url value='/reply'/>" enctype="multipart/form-data">
+            <input type="text" name="groupno" value="${vo.groupno }">
+			<input type="text" name="step" value="${vo.step }">
+			<input type="text" name="sortno" value="${vo.sortno }">
+			<input type="text" name="no" value="${vo.reboardNo }">
 				<fieldset>
 					<div id="aa">
 						<label for="title">제목</label>
@@ -20,8 +24,6 @@
 					<div id="lastdiv">
 						<button type="button" class="btn btn-gradient-danger btn-rounded btn-fw" id="bfsub">작성완료</button>
 					</div>
-					<input type="hidden" name="brfck" id="brfck">
-					<input type="hidden" name="boardNo" id="boardNo" value="${vo.reboardNo }">
 				</fieldset>
 			</form>
 

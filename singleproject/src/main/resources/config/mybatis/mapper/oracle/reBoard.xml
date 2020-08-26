@@ -10,10 +10,10 @@
 		</selectKey>
 		insert into 
 		tbl_reboard(reboard_no, reboard_title, reboard_content, groupno
-		,step,sortno,ckimgup,filename,filesize,originalfilename,userid)
+		,ckimgup,filename,filesize,originalfilename,userid)
 		
 		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{reboardNo}
-		,#{step}+1,#{sortno}+1,#{ckimgup},#{filename},#{filesize},#{originalfilename},#{userid})
+		,#{ckimgup},#{filename},#{filesize},#{originalfilename},#{userid})
 	</insert>
 	
 	<sql id="searchWhere">
@@ -61,6 +61,39 @@
 		,filesize=#{filesize} ,downcount= #{downcount}
 		,originalfilename=#{originalfilename}
 		where reboard_no= #{reboardNo}
+	</update>
+	
+	<update id="updateSortNo" parameterType="reboardVo">
+		update tbl_reboard 
+		set sortno=sortno+1 
+		where groupno=#{groupno} and sortno>#{sortno}
+	</update>
+	
+	<insert id="reply" parameterType="reboardVo">
+		<selectKey order="BEFORE" resultType="int" keyProperty="reboardNo">
+			select reboard_seq.nextval from dual
+		</selectKey>
+		insert into 
+		tbl_reboard(reboard_no, reboard_title, reboard_content, groupno
+		,step,groupno,sortno,ckimgup,userid)
+		
+		values(#{reboardNo},#{reboardTitle},#{reboardContent},#{groupno}
+		,#{step}+1,#{sortno}+1,#{ckimgup},#{userid})
+	</insert>
+	
+	<parameterMap type="map" id="delParamMap">
+		<parameter property="no" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="groupno" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+		<parameter property="step" javaType="string" jdbcType="VARCHAR" mode="IN"/>
+	</parameterMap>
+	<delete id="reboardDel" parameterMap="delParamMap">
+		call delete_reboard(?,?,?)
+	</delete>
+	
+	<update id="downCntUp" parameterType="int">
+		update tbl_reboard
+		set downcount=downcount+1
+		where reboard_no=#{reboardNo}
 	</update>
 </mapper>
 

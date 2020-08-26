@@ -93,3 +93,53 @@ create sequence reboard_seq
 start with 1
 increment by 1
 nocache;
+
+
+
+
+/*
+exec delete_reboard(13,13,0);
+exec delete_reboard(1,1,1);
+*/
+
+
+create or replace procedure delete_reboard --프로시저 이름 
+(
+--매개변수
+    p_no  number,
+    p_groupno number,
+    p_step    number
+)
+is
+--변수선언부
+    cnt number;
+begin
+--처리할 내용
+    --답변있는 원본글인 경우 delflag를 Y로 update, 나머지는 delete
+    if p_step=0 then --원본글
+        --답변이 있는지 체크
+        select count(*) into cnt
+        from tbl_reboard
+        where groupno=p_groupno;
+        
+        if cnt>1 then  --답변이 있는 경우
+            update tbl_reboard
+            set delflag='Y'
+            where reboard_no=p_no;
+        else    --답변이 없는 경우
+            delete from tbl_reboard
+            where reboard_no=p_no;
+        end if;
+        
+    else --
+        delete from tbl_reboard
+        where reboard_no=p_no;
+    end if;
+    
+    commit;
+
+EXCEPTION
+    WHEN OTHERS THEN
+	raise_application_error(-20001, '글 삭제 실패!');
+        ROLLBACK;
+end;

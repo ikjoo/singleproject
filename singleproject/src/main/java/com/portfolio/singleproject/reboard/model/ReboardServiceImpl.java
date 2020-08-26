@@ -1,9 +1,11 @@
 package com.portfolio.singleproject.reboard.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ReboardServiceImpl implements ReboardService{
@@ -39,6 +41,27 @@ public class ReboardServiceImpl implements ReboardService{
 	@Override
 	public int reboardEdit(ReboardVO reboardVo) {
 		return reboardDao.reboardEdit(reboardVo);
+	}
+
+	@Override
+	@Transactional
+	public int reply(ReboardVO reboardVo) {
+		
+		int cnt=reboardDao.updateSortNo(reboardVo);
+		
+		cnt=reboardDao.reply(reboardVo);
+		
+		return cnt;
+	}
+
+	@Override
+	public int reboardDel(Map<String, String> map) {
+		return reboardDao.reboardDel(map);
+	}
+
+	@Override
+	public int downCntUp(int reboardNo) {
+		return reboardDao.downCntUp(reboardNo);
 	}
 	
 }

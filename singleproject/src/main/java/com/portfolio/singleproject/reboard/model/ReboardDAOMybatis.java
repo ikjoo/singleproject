@@ -1,6 +1,7 @@
 package com.portfolio.singleproject.reboard.model;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,26 @@ public class ReboardDAOMybatis implements ReboardDAO{
 	@Override
 	public int reboardEdit(ReboardVO reboardVo) {
 		return sqlSession.update(namespace+"reboardEdit", reboardVo);
+	}
+
+	@Override
+	public int updateSortNo(ReboardVO reboardVo) {
+		return sqlSession.update(namespace+"updateSortNo",reboardVo);
+	}
+
+	@Override
+	public int reply(ReboardVO reboardVo) {
+		return sqlSession.insert(namespace+"reply",reboardVo);
+	}
+
+	@Override
+	public int reboardDel(Map<String, String> map) {
+		return sqlSession.delete(namespace+"reboardDel", map);
+	}
+
+	@Override
+	public int downCntUp(int reboardNo) {
+		return sqlSession.update(namespace+"downCntUp", reboardNo);
 	}
 	
 	

@@ -2,6 +2,7 @@ package com.portfolio.singleproject.reboard.controller;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.portfolio.singleproject.common.FileUploadUtil;
 import com.portfolio.singleproject.common.Utility;
@@ -292,8 +294,17 @@ public class Reboardcontroller {
 	}
 	
 	@RequestMapping(value = "/reply", method = RequestMethod.GET)
-	public Object replyGet(@RequestParam int no,Model model) {
+	public Object replyGet(@RequestParam int no,Model model,HttpSession session) {
 		logger.info("댓글달기 get 파라미터 no={}",no);
+		
+		String userid=(String) session.getAttribute("userid");
+		
+		if(Utility.ckupimg.containsKey(userid)) {
+			Utility.ckupimg.remove(userid);
+		}
+		if(Utility.urltag.containsKey(userid)) {
+			Utility.urltag.remove(userid);
+		}
 		
 		ReboardVO vo=reboardService.reboardSelByNo(no);
 		
@@ -312,4 +323,79 @@ public class Reboardcontroller {
 		
 		return "reboard/reply";
 	}
+	
+	@RequestMapping(value = "/reply", method = RequestMethod.POST)
+	public Object replyPost(@ModelAttribute ReboardVO reboardVo,Model model,HttpSession session
+			,@RequestParam int no) {
+		logger.info("답글 달기 파라미터 reboardVo={}",reboardVo);
+		
+		String url="", msg="";
+		
+		int res=reboardService.reply(reboardVo);
+		
+		if(res>0) {
+			msg="답글 등록 완료!";
+			url="/main";
+		}else {
+			msg="댓글 등록 실패!";
+			url="/reply?no="+no;
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+		
+		
+	}
+	
+	@RequestMapping("/delete")
+	public Object del(@RequestParam int no,@RequestParam int groupno,@RequestParam int step,Model model) {
+		logger.info("삭제 파라미터 no={},groupno={}",no,groupno);
+		logger.info("step={}",step);
+		
+		Map<String, String> map=new HashMap<String, String>();
+		map.put("no", Integer.toString(no));
+		map.put("groupno", Integer.toString(groupno));
+		map.put("step", Integer.toString(step));
+		
+		int res=reboardService.reboardDel(map);
+		
+		String msg="", url="";
+		
+		if(res>0) {
+			msg="삭제 완료";
+			url="/main";
+		}else {
+			msg="삭제 실패";
+			url="/detail?reboardNo="+no;
+		}
+		
+		model.addAttribute("msg", msg);
+		model.addAttribute("url", url);
+		
+		return "common/message";
+	}
+	
+	@RequestMapping("/download")
+	public ModelAndView downloadView(@RequestParam int no,@RequestParam String filename
+			,HttpServletRequest request,HttpSession session) {
+		logger.info("다운로드 파라미터 no={},filename={}",no,filename);
+		
+		int res=reboardService.downCntUp(no);
+		logger.info("다운로드 수 증가 결과 res={}",res);
+		
+		String upPath=fileUtil.getFilePath(request, FileUploadUtil.FILE_UPLOAD, session);
+		logger.info("path={},filename={}",upPath,filename);
+		File file=new File(upPath, filename);
+		
+		Map<String, Object> map=new HashMap<String, Object>();
+		map.put("file", file);
+		
+		ModelAndView mav=new ModelAndView("ReBoardDownloadView", map);
+		
+		return mav;
+		
+	}
+	
 }

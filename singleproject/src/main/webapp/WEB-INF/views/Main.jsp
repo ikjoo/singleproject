@@ -35,23 +35,52 @@
 				<tbody style="width: 100%;">
 				<c:if test="${empty list }">
 					<tr>
-						<td colspan="5">등록된 게시글이 없습니다.</td>
+						<td colspan="5">해당 글이 존재하지 않습니다.</td>
 					</tr>
 				</c:if>
-				<c:if test="${!empty list }">
-					<c:forEach var="vo" items="${list }">
-							<tr>
-							<td>${vo.reboardNo }</td>
-							<td><a href="<c:url value='/readCnt?reNo=${vo.reboardNo }'/>" >${vo.reboardTitle }</a>
+					<c:if test="${!empty list }">
+						<c:forEach var="vo" items="${list }">
+						<tr>
+						<c:if test="${vo.delflag=='Y' }">
+						<td>${vo.reboardNo}</td>
+						<td style="text-align:left; color: gray;">삭제된 글입니다.</td>
+						<td>${vo.userid}</td>
+						<td><fmt:formatDate value="${vo.reboardReg }" 
+							pattern="yyyy-MM-dd"/>
+						</td>
+						<td>${vo.readcount}</td>
+						</c:if>
+						<c:if test="${vo.delflag=='N' }">
+						<td>${vo.reboardNo}</td>
+						<td style="text-align:left">
+							<c:forEach begin="0" end="${vo.step }" var="a">
+							<c:if test="${a<vo.step }">
+								<img src="<c:url value='/resources/images/re.gif'/>">
+							</c:if>
+							</c:forEach>					
+							<c:if test="${fn:length(vo.filename)>0 }">
+								<img src="<c:url value='/resources/images/file.gif'/>">
+							</c:if>
+							
+							<a href="<c:url value='/readCnt?reNo=${vo.reboardNo }'/>" >
+								<!-- 제목이 긴 경우 일부만 보여주기-->
+								<c:if test="${fn:length(vo.reboardTitle)>30}">
+									${fn:substring(vo.reboardTitle, 0,30)}...
+								</c:if>
+								<c:if test="${fn:length(vo.reboardTitle)<=30}">
+									${vo.reboardTitle}
+								</c:if>													
+							</a>
 							</td>
-							<td>${vo.userid }</td>
-							<td><fmt:formatDate value="${vo.reboardReg }" pattern="yyyy-MM-dd"/>
-							</td>
-							<td>${vo.readcount }
-							</td>
-							</tr>
-					</c:forEach>
-				</c:if>
+						<td>${vo.userid}</td>
+						<td><fmt:formatDate value="${vo.reboardReg }" 
+							pattern="yyyy-MM-dd"/>
+						</td>
+						<td>${vo.readcount}</td>
+						</c:if>
+					</tr> 
+						</c:forEach>
+					</c:if>
 					
 				</tbody>
 			</table>

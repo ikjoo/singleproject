@@ -24,7 +24,7 @@
 			<span>
 			<c:if test="${!empty vo.originalfilename }">
 			<img src="<c:url value='/resources/images/file.gif'/>">
-			 <a href="<c:url value=''/>">
+			 <a href="<c:url value='/download?no=${vo.reboardNo}&filename=${vo.filename}'/>">
 			 ${vo.originalfilename }
 			 </a>
 			  다운 : ${vo.downcount }
@@ -72,7 +72,7 @@ $(function() {
 	
 	$("#delA").click(function() {
 		if(alert("삭제 하시겠습니까?")){
-			location.href='<c:url value="/delete?no=${param.reboardNo }&groupNo=${vo.groupno }&step=${vo.step }"/>';
+			location.href='<c:url value="/delete?no=${param.reboardNo }&groupno=${vo.groupno }&step=${vo.step }"/>';
 		}
 	});
 

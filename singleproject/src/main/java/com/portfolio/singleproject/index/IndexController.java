@@ -112,7 +112,7 @@ public class IndexController {
 		
 	}
 	
-	@RequestMapping("/download")
+	@RequestMapping("/download2")
 	public Object filedown(@RequestParam(required = false) String downdir) {
 		File downfile=new File(downdir);
 		

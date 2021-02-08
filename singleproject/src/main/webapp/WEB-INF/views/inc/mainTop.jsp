@@ -47,7 +47,7 @@
                 <div class="nav-profile-img">
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black"><%-- ${sessionScope.adminUserName} --%></p>
+                  <p class="mb-1 text-black">${sessionScope.userid}</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
@@ -99,15 +99,8 @@
                 <i class="mdi mdi-note-text menu-icon"></i>
               </a>
             </li>
-            <!-- 폴더 공유 -->
-            <li class="nav-item" id="folderShare">
-              <a class="nav-link z" href="<c:url value=''/>">
-                <span class="menu-title">폴더공유</span>
-                <i class="mdi mdi-import menu-icon"></i>
-              </a>
-            </li>
 
-			<!-- 회원관리 -->
+			<!-- 날씨 -->
 			<li class="nav-item" id="weather">
               <a class="nav-link z" href="<c:url value=''/>">
                 <span class="menu-title">지역별 날씨</span>
@@ -115,7 +108,7 @@
               </a>
             </li>
 
-			<!-- 매출관리 -->
+			<!-- 포트폴리오 다운로드/업로드(이건 나만 가능) -->
 			<li class="nav-item" id="mainBoard">
               <a class="nav-link z" href="<c:url value=''/>">
                 <span class="menu-title">안정함</span>
@@ -123,7 +116,7 @@
               </a>
             </li>
             
-            <!-- 통계 -->
+            <!-- 결제 -->
 			<li class="nav-item" id="mainBoard">
               <a class="nav-link z" href="<c:url value=''/>">
                 <span class="menu-title">안정함</span>

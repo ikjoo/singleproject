@@ -28,9 +28,9 @@
     <script type="text/javascript">
     $(function() {
 		
-		$("#logout").click(function() {
+    	$("#logout").click(function() {
 			if(confirm("로그아웃 하시겠습니까?")){
-				location.href="<c:url value=''/>";
+				location.href="<c:url value='/logout'/>";
 			}
 		});
 		
